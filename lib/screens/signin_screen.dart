@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:popwatch/screens/home_with_user.dart';
 import 'package:popwatch/screens/profile_screen.dart';
 import 'package:popwatch/screens/register_screen.dart';
 
@@ -122,7 +123,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       onTap: () {
                         if (formkey.currentState!.validate()){
                           Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => ProfileScreen())
+                            MaterialPageRoute(builder: (context) => HomeWithUser())
                           );
                         }
                       }

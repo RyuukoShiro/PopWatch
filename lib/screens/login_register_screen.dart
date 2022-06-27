@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:popwatch/screens/signin_screen.dart';
 import 'package:popwatch/screens/register_screen.dart';
-import '../constants.dart';
 
 
 class LoginRegisterScreen extends StatelessWidget {
