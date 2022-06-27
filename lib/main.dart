@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:popwatch/lists/comments_list.dart';
 import 'package:popwatch/lists/favourites_list.dart';
 import 'package:popwatch/lists/movie_show_list.dart';
 import 'package:popwatch/screens/favourites_screen.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(providers: [
     ChangeNotifierProvider<MovieShowList>(create: (context) => MovieShowList()),
       ChangeNotifierProvider<FavouritesList>(create: (context) => FavouritesList()),
+      ChangeNotifierProvider<CommentsList>(create: (context) => CommentsList()),
     ],
       child: ValueListenableBuilder<ThemeMode>(
         valueListenable: themeNotifier,

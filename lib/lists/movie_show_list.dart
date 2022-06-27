@@ -5,6 +5,7 @@ import 'package:popwatch/models/movie_show.dart';
 class MovieShowList with ChangeNotifier{
 
   List<MoviesAndShow> movieshowList = [
+
     MoviesAndShow(title: 'Doctor Strange in the Multiverse of Madness', description:
     "Doctor Strange teams up with a mysterious teenage girl from his dreams who can travel across multiverses, "
         "to battle multiple threats, including other-universe versions of himself, which threaten to wipe out millions across the multiverse."
@@ -41,16 +42,9 @@ class MovieShowList with ChangeNotifier{
   ];
 
 
-
-
-  List<MoviesAndShow>  getMoviesShows(){
-    return movieshowList;
-  }
-
   void addMoviesShows(title, description, runtime, company, genre,
       trailer, poster, cover, type) {
-    movieshowList.insert(
-        0,
+    movieshowList.insert(0,
         MoviesAndShow(
           title: title,
           description: description,
@@ -64,6 +58,11 @@ class MovieShowList with ChangeNotifier{
         ));
     notifyListeners();
   }
+
+  List<MoviesAndShow>  getMoviesShows(){
+    return movieshowList;
+  }
+
 
   String searchString = "";
 }

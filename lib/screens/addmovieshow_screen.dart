@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:popwatch/lists/movie_show_list.dart';
+import 'package:provider/provider.dart';
 
 class AddMovieShow extends StatefulWidget {
   const AddMovieShow({Key? key}) : super(key: key);
@@ -11,7 +12,6 @@ class AddMovieShow extends StatefulWidget {
 }
 
 class _AddMovieShowState extends State<AddMovieShow> {
-
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
   String? title;
@@ -23,11 +23,11 @@ class _AddMovieShowState extends State<AddMovieShow> {
   String? poster;
   String? cover;
   String? type;
-  //add the recipes into the list when the form is valid
+
   void addMoviesShows(MovieShowList movieshowList) {
-    bool isValid = form.currentState!.validate();
+    bool isValid = formkey.currentState!.validate();
     if (isValid) {
-      form.currentState!.save();
+      formkey.currentState!.save();
       if (kDebugMode) {
       }
       if (kDebugMode) {
@@ -38,7 +38,7 @@ class _AddMovieShowState extends State<AddMovieShow> {
         content: Text('Movies/Show is added!'),
       ));
       Navigator.pop(context);
-      form.currentState!.reset();
+      formkey.currentState!.reset();
     }
     FocusScope.of(context).unfocus();
   }
@@ -53,6 +53,7 @@ class _AddMovieShowState extends State<AddMovieShow> {
 
   @override
   Widget build(BuildContext context) {
+    MovieShowList movieshowList = Provider.of<MovieShowList>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Movie', textAlign: TextAlign.center,),
@@ -314,9 +315,14 @@ class _AddMovieShowState extends State<AddMovieShow> {
               if (formkey.currentState!.validate()){
                 addMoviesShows(movieshowList);
               }
+              else{
+
+              }
+
             }
         ),
                   SizedBox(height: 30),
+
                 ],
               )
             )

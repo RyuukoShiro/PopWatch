@@ -17,6 +17,7 @@ class _ListScreenState extends State<ListScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     MovieShowList movieshowList = Provider.of<MovieShowList>(context);
 
 

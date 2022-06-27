@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:popwatch/models/movie_show.dart';
-import '../screens/movie_details.dart';
+import '../screens/movieshow_details.dart';
 
 class MediaGridView extends StatelessWidget {
 

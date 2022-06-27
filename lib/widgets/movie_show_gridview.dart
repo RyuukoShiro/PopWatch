@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:popwatch/lists/movie_show_list.dart';
 import 'package:popwatch/models/movie_show.dart';
-import 'package:popwatch/screens/movie_details.dart';
+import 'package:popwatch/screens/movieshow_details.dart';
 import 'package:provider/provider.dart';
 
 

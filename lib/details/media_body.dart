@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:popwatch/lists/comments_list.dart';
 import 'package:popwatch/models/movie_show.dart';
+import 'package:popwatch/widgets/comments_listview.dart';
 import 'package:provider/provider.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:popwatch/lists/favourites_list.dart';
@@ -24,6 +26,9 @@ class MovieShowBody extends StatefulWidget {
 class _MovieShowBodyState extends State<MovieShowBody> {
   String changeText = "Favourites";
   Widget build(BuildContext context) {
+
+    CommentsList commentsList = Provider.of<CommentsList>(context);
+
     Size size = MediaQuery.of(context).size;
      FavouritesList favouritesList = Provider.of<FavouritesList>(context);
     if(favouritesList.getFavouritesList().every((element) =>
@@ -142,8 +147,33 @@ class _MovieShowBodyState extends State<MovieShowBody> {
                     subtitle: Text(widget.movieshowDisplay.description),
                   ),
               ),
+              Container(
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          primary: const Color(0xFFFFCCBC),
+                        ),
+                        icon: Icon(
+                          Icons.edit,
+                          size: 24.0,
+                        ),
+                        label: Text("Add comment"),
+                        onPressed: () {},
+                      )],
+                    ),
+                  ],
+                ),
+              ),
               Card(
-
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(height:150, child: CommentsListView(commentsList.getComments())),
+                  ],
+                ),
               ),
             ],
           )

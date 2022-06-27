@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:popwatch/lists/favourites_list.dart';
 import 'package:popwatch/lists/movie_show_list.dart';
 import 'package:popwatch/models/movie_show.dart';
-import 'package:popwatch/screens/movie_details.dart';
+import 'package:popwatch/screens/movieshow_details.dart';
 import 'package:provider/provider.dart';
 
 class FavouritesGridView extends StatelessWidget {
@@ -18,7 +18,7 @@ class FavouritesGridView extends StatelessWidget {
     MovieShowList movieShowList = Provider.of<MovieShowList>(context);
 
     return Container(
-      margin: EdgeInsets.only(top: 30),
+      margin: EdgeInsets.only(top: 15),
       child:
       GridView.builder(itemBuilder: (ctx, i) {
         return ClipRRect

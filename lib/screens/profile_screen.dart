@@ -125,7 +125,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   onTap: (){
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => AddMovie())
+                        MaterialPageRoute(builder: (context) => AddMovieShow())
                     );
                   }
               ),
