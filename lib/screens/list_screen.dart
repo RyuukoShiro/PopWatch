@@ -20,7 +20,6 @@ class _ListScreenState extends State<ListScreen> {
 
     MovieShowList movieshowList = Provider.of<MovieShowList>(context);
 
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -47,7 +46,8 @@ class _ListScreenState extends State<ListScreen> {
               child: (
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [Container(height:500, child: MovieShowGridView(movieshowList.getMoviesShows())),],
+                    children: [Container(height:500, child: MovieShowGridView(movieshowList.getMoviesShows())
+                    ),],
                   )
               ),
             ),

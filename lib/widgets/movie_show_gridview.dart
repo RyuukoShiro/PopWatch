@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 
 class MovieShowGridView extends StatelessWidget {
 
-  MovieShowGridView(this.movieshowList,  {Key? key}) : super(key: key);
-  List <MoviesAndShow> movieshowList;
+  MovieShowGridView(this.movieshowList, {Key? key}) : super(key: key);
+  List<MoviesAndShow> movieshowList;
 
   @override
   Widget build(BuildContext context) {

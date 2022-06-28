@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:popwatch/lists/comments_list.dart';
 import 'package:popwatch/models/movie_show.dart';
+import 'package:popwatch/screens/addcomment.dart';
 import 'package:popwatch/widgets/comments_listview.dart';
 import 'package:provider/provider.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -161,7 +162,11 @@ class _MovieShowBodyState extends State<MovieShowBody> {
                           size: 24.0,
                         ),
                         label: Text("Add comment"),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => AddComment(commentsList.getComments()))
+                          );
+                        },
                       )],
                     ),
                   ],
@@ -171,7 +176,7 @@ class _MovieShowBodyState extends State<MovieShowBody> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(height:150, child: CommentsListView(commentsList.getComments())),
+                    Container(height:300, child: CommentsListView()),
                   ],
                 ),
               ),
