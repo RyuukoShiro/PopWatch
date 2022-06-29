@@ -17,6 +17,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
 
     List<MoviesAndShow> movieshowList = Provider.of<MovieShowList>(context).getMoviesShows();
+    //Calls the provider list based on getMoviesShows
 
     return Scaffold(
         body: SingleChildScrollView(
@@ -45,13 +46,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 Padding(padding: EdgeInsets.symmetric(horizontal: 12.0),
                   child: Container(
                       child: Column(mainAxisAlignment: MainAxisAlignment.start,
-                        children: [Container(height: 180, child: MediaGridView(movieshowList.where((element) => element.type == "Movie").toList()
+                        children: [Container(height: 220, child: MediaGridView(movieshowList.where((element) => element.type == "Movie").toList()
+                            // Calls the MediaGridView for it to show on the home.dart, and checks for what type of media it is, whether it is a movie or show
+                          // If its a movie, the gridview will show only movies.
                         )
                         ),
                         ],)
                   ),
                 ),
-                SizedBox(height: 30),
 
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -77,12 +79,13 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     Padding(padding: EdgeInsets.symmetric(horizontal: 12.0),
                       child: Container(
                           child: Column(mainAxisAlignment: MainAxisAlignment.start,
-                            children: [Container(height: 180, child: MediaGridView(movieshowList.where((element) => element.type == "Show").toList()))
+                            children: [Container(height: 220, child: MediaGridView(movieshowList.where((element) => element.type == "Show").toList()))
+                              // Calls the MediaGridView for it to show on the home.dart, and checks for what type of media it is, whether it is a movie or show
+                              // If its a show, the gridview will show only shows.
                             ],)
                       ),
                     ),
-                    SizedBox(height: 30),
-
+                    SizedBox(height: 20),
                   ],
                 )
               ],

@@ -170,6 +170,9 @@ class _EditCommentState extends State<EditComment> {
                                     onTap: () {
                                       if (formkey.currentState!.validate()){
                                         editComments(comments);
+                                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                          content: Text('Comment is edited!'),
+                                        ));
                                       }
                                       else{
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:popwatch/main_with_user.dart';
 import 'package:popwatch/screens/home_with_user.dart';
 import 'package:popwatch/screens/profile_screen.dart';
 import 'package:popwatch/screens/register_screen.dart';
@@ -58,6 +59,8 @@ class _SignInScreenState extends State<SignInScreen> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 0.0),
                           child: TextFormField(
+                            // Validator is used to check if there is any values within the TextFormField
+                            // For EmailValidator is able to check whether it is a valid email or not with it is checking the @ and the .com
                               validator: MultiValidator([
                                 RequiredValidator(errorText: "* Required"),
                                 EmailValidator(errorText: "Enter valid email id"),
@@ -81,6 +84,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           padding: const EdgeInsets.only(left: 0.0),
                           child: TextFormField(
                             validator: MultiValidator([
+                              // Validator is used to check if there is any values within the TextFormField
                               RequiredValidator(errorText: "* Required"),
                               MinLengthValidator(6,
                                   errorText: "Password should be atleast 6 characters"),
@@ -121,10 +125,15 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                       ),
                       onTap: () {
+                        //formkey checks whether if there is any values currently in the TextFormView
+                        // if so will be routed to the MainScreenWithUser
                         if (formkey.currentState!.validate()){
                           Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => HomeWithUser())
+                            MaterialPageRoute(builder: (context) => MainScreenWithUser()),
                           );
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            content: Text('Login Successful!'),
+                          ));
                         }
                       }
                     ),

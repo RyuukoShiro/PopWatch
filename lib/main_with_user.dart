@@ -7,15 +7,16 @@ import 'package:popwatch/screens/favourites_screen.dart';
 import 'package:popwatch/screens/home.dart';
 import 'package:popwatch/screens/list_screen.dart';
 import 'package:popwatch/screens/login_register_screen.dart';
+import 'package:popwatch/screens/profile_screen.dart';
 import 'package:popwatch/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+      SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   runApp(MyApp());
 }
-
+// Class is exactly the same as main.dart but its used for logged in users
 class MyApp extends StatelessWidget {
   static final ValueNotifier<ThemeMode> themeNotifier =
   ValueNotifier(ThemeMode.light);
@@ -26,12 +27,10 @@ class MyApp extends StatelessWidget {
 
 
     return MultiProvider(providers: [
-    ChangeNotifierProvider<MovieShowList>(create: (context) => MovieShowList()),
+      ChangeNotifierProvider<MovieShowList>(create: (context) => MovieShowList()),
       ChangeNotifierProvider<FavouritesList>(create: (context) => FavouritesList()),
       ChangeNotifierProvider<CommentsList>(create: (context) => CommentsList()),
     ],
-      //The MultiProvider ensures that each provider is working on the page which it contains
-      //ThemeNotifier allows the users to switch between light mode and dark mode
       child: ValueListenableBuilder<ThemeMode>(
         valueListenable: themeNotifier,
         builder: (_, ThemeMode currentMode, __){
@@ -63,16 +62,15 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MainScreen extends StatefulWidget {
+class MainScreenWithUser extends StatefulWidget {
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<MainScreenWithUser> createState() => _MainScreenWithUserState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainScreenWithUserState extends State<MainScreenWithUser> {
   int selectedIndex = 1;
   final screens = [const ListScreen(), Home(), FavouritesScreen()];
-  //Current index is on Home(), so when first launched the app will be shown on the Home() screen
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,12 +82,11 @@ class _MainScreenState extends State<MainScreen> {
             icon: const Icon(Icons.person),
             onPressed: () {
               Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const LoginRegisterScreen())
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProfileScreen())
               );
             },
           ),
-          //Icon button for the switching of dark mode and light mode
           IconButton(
               icon: Icon(MyApp.themeNotifier.value == ThemeMode.light
                   ? Icons.dark_mode
@@ -102,7 +99,6 @@ class _MainScreenState extends State<MainScreen> {
               })
         ],
       ),
-      // Bottom Navigation to ensure navigation for each page
       body: screens[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,

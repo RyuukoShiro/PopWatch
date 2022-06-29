@@ -15,6 +15,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
 
   @override
+  // The initState is used for the splashcreen to wait how more secs before returning back to the mainscreen
   void initState() {
     // TODO: implement initState
     super.initState();

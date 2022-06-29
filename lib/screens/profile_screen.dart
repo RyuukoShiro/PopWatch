@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:popwatch/main.dart';
 import 'package:popwatch/screens/addmovieshow_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -130,10 +131,37 @@ class ProfileScreen extends StatelessWidget {
                   }
               ),
               SizedBox(height: 15,),
+              InkWell(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Container(
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFFFAB91),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Center(
+                          child:
+                          Text("Logout",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),)
+                      ),
+                    ),
+                  ),
+                  onTap: (){
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => MainScreen())
+                    );
+                  }
+              ),
             ],
-          )
+          ),
         ),
       )
     );
+
   }
 }

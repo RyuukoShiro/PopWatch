@@ -9,12 +9,13 @@ import 'package:provider/provider.dart';
 class AddComment extends StatefulWidget {
   List<Comments> commentsList;
   final String movieTitle;
+  //String calls movieTitle from the comments list.
+
   AddComment({Key? key, required this.movieTitle, required this.commentsList}) : super(key: key);
 
   @override
   State<AddComment> createState() => _AddCommentState();
 }
-
 GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
 class _AddCommentState extends State<AddComment> {
@@ -23,6 +24,7 @@ class _AddCommentState extends State<AddComment> {
   String? username;
   String? description;
 
+  // function addComments check if the formkey has validation or not.
   void addComments(CommentsList commentsList) {
     bool isValid = formkey.currentState!.validate();
     if (isValid) {
@@ -31,6 +33,7 @@ class _AddCommentState extends State<AddComment> {
       }
       if (kDebugMode) {
       }
+      //calls the function addComments from the comments_list, and output snackbar when succesfully added.
       commentsList.addComments(widget.movieTitle, profileicon, username, description);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Comment is added!'),
@@ -41,7 +44,7 @@ class _AddCommentState extends State<AddComment> {
     FocusScope.of(context).unfocus();
   }
 
-
+// check if there is any values in the validation
   void validate(){
     if(formkey.currentState!.validate()){
       print("validated");
@@ -93,7 +96,7 @@ class _AddCommentState extends State<AddComment> {
                             ]
                             ),
                             onSaved:(value){
-                              profileicon = value as String;
+                              profileicon = value as String; // TextFormField call for profileicon
                             },
                             decoration: InputDecoration(
                               border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -117,7 +120,7 @@ class _AddCommentState extends State<AddComment> {
                             ]
                             ),
                             onSaved:(value){
-                              username = value as String;
+                              username = value as String; // TextFormField call for username
                             },
                             decoration: InputDecoration(
                               border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -141,7 +144,7 @@ class _AddCommentState extends State<AddComment> {
                             ]
                             ),
                             onSaved:(value){
-                              description = value as String;
+                              description = value as String;// TextFormField call for description
                             },
                             decoration: InputDecoration(
                               border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -175,7 +178,7 @@ class _AddCommentState extends State<AddComment> {
                           ),
                         ),
                         onTap: () {
-                          if (formkey.currentState!.validate()){
+                          if (formkey.currentState!.validate()){ //Checks if all values are in the TextFormField if so, call function addComments to add to the list
                             addComments(commentsList);
                           }
                           else{

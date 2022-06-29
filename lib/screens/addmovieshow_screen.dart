@@ -12,6 +12,7 @@ class AddMovieShow extends StatefulWidget {
 }
 
 class _AddMovieShowState extends State<AddMovieShow> {
+  // Creates a globalkey for formkey to check for validation
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
   String? title;
@@ -24,6 +25,7 @@ class _AddMovieShowState extends State<AddMovieShow> {
   String? cover;
   String? type;
 
+  // Calls addMoviesShows from the movie_show_list and checks whether if theres is values.
   void addMoviesShows(MovieShowList movieshowList) {
     bool isValid = formkey.currentState!.validate();
     if (isValid) {
@@ -32,6 +34,7 @@ class _AddMovieShowState extends State<AddMovieShow> {
       }
       if (kDebugMode) {
       }
+      //calls the function addComments from the movieshowList, and output snackbar when succesfully added.
       movieshowList.addMoviesShows(title, description, runtime, company,
           genre, trailer, poster, cover, type);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -43,6 +46,7 @@ class _AddMovieShowState extends State<AddMovieShow> {
     FocusScope.of(context).unfocus();
   }
 
+// check if there is any values in the validation
   void validate(){
     if(formkey.currentState!.validate()){
       print("validated");
@@ -54,6 +58,8 @@ class _AddMovieShowState extends State<AddMovieShow> {
   @override
   Widget build(BuildContext context) {
     MovieShowList movieshowList = Provider.of<MovieShowList>(context);
+    // Calls the provider of MovieShowList
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Movie', textAlign: TextAlign.center,),
@@ -313,7 +319,12 @@ class _AddMovieShowState extends State<AddMovieShow> {
           ),
             onTap: () {
               if (formkey.currentState!.validate()){
+                //formkey checks whether if there is any validation values in the TextFormField if have values
+                // function addMoviesShows will be done, values entered will be sent to the list and outputted to the gridview.
                 addMoviesShows(movieshowList);
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text('Successfully added!'),
+                ));
               }
               else{
 

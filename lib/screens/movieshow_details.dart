@@ -23,6 +23,7 @@ class MovieShowDetails extends StatelessWidget {
       )
     );
   }
+  //Calls goToDetails so that everypage that contains a movie or show, is able to call the function and get to the MovieShowDetails Page
   static void goToDetails(BuildContext context, MoviesAndShow movieshowDisplay){
     Navigator.push(
       context, MaterialPageRoute(builder: (context) => MovieShowDetails(movieshowDisplay: movieshowDisplay)),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:popwatch/screens/signin_screen.dart';
 import 'package:popwatch/screens/register_screen.dart';
 
-
+//Screen is used for users to choose between register and sign in
 class LoginRegisterScreen extends StatelessWidget {
   const LoginRegisterScreen({Key? key}) : super(key: key);
 

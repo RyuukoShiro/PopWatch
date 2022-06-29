@@ -4,6 +4,7 @@ import 'package:popwatch/models/movie_show.dart';
 import 'package:popwatch/widgets/media_gridview.dart';
 import 'package:provider/provider.dart';
 
+// New home screen is added for users who successfully logged in or registered
 class HomeWithUser extends StatefulWidget {
   static String routeName = "/homewithuser";
 
@@ -15,6 +16,8 @@ class _HomeWithUserState extends State<HomeWithUser> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     List<MoviesAndShow> movieshowList = Provider.of<MovieShowList>(context).getMoviesShows();
+    //Calls the provider list based on getMoviesShows
+
     return Scaffold(
         body: SingleChildScrollView(
           child: SafeArea(
@@ -43,6 +46,8 @@ class _HomeWithUserState extends State<HomeWithUser> with TickerProviderStateMix
                   child: Container(
                       child: Column(mainAxisAlignment: MainAxisAlignment.start,
                         children: [Container(height: 180, child: MediaGridView(movieshowList.where((element) => element.type == "Movie").toList()
+                          // Calls the MediaGridView for it to show on the home.dart, and checks for what type of media it is, whether it is a movie or show
+                          // If its a movie, the gridview will show only movies.
                         )
                         ),
                         ],)
@@ -75,6 +80,8 @@ class _HomeWithUserState extends State<HomeWithUser> with TickerProviderStateMix
                       child: Container(
                           child: Column(mainAxisAlignment: MainAxisAlignment.start,
                             children: [Container(height: 180, child: MediaGridView(movieshowList.where((element) => element.type == "Show").toList()))
+                              // Calls the MediaGridView for it to show on the home.dart, and checks for what type of media it is, whether it is a movie or show
+                              // If its a show, the gridview will show only shows.
                             ],)
                       ),
                     ),

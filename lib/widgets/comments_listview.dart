@@ -17,7 +17,9 @@ class CommentsListView extends StatefulWidget {
 class _CommentsListViewState extends State<CommentsListView> {
   @override
   Widget build(BuildContext context) {
+    //Calls the provider for CommentsList
     CommentsList commentsProvider = Provider.of<CommentsList>(context);
+    // var commentList is used to call the provider where the current movieTitle which the MovieDetails is in.
     var commentsList = Provider.of<CommentsList>(context).getComments().where((element) => element.movieTitle == widget.movieTitle).toList();
 
 
@@ -32,6 +34,7 @@ class _CommentsListViewState extends State<CommentsListView> {
               child: Icon(Icons.delete, size: 25, color: Colors.white),
             ),
             key: UniqueKey(),
+            //Calls the function deleteComment based on the Index (i) when swiped right or left.
             onDismissed: (direction) {
               setState((){
                 commentsProvider.deleteComment(i);

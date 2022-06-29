@@ -16,6 +16,8 @@ class MovieShowBody extends StatefulWidget {
   @override
   State<MovieShowBody> createState() => _MovieShowBodyState();
 
+  //Calls the gotoMovieDetails so that when it is an movie or show is called it will transport the user
+  // to the moviedetails page with the current index
   static void goToMovieDetails(BuildContext context, MoviesAndShow movieshowDisplay){
     Navigator.push(
       context, MaterialPageRoute(builder: (context) => MovieShowBody(movieshowDisplay: movieshowDisplay)),
@@ -31,7 +33,11 @@ class _MovieShowBodyState extends State<MovieShowBody> {
     CommentsList commentsList = Provider.of<CommentsList>(context);
 
     Size size = MediaQuery.of(context).size;
+    //Calls the favouritelist provider from FavouritesList
      FavouritesList favouritesList = Provider.of<FavouritesList>(context);
+     //Checks whether if the current element has existing movie or show
+    //if not it will be added to the favouriteslist. But if there is already a existing movie or show inside
+    //it allows the users to unfavourite it, to call the deleteFavourites function to remove it from the list
     if(favouritesList.getFavouritesList().every((element) =>
     element.title != widget.movieshowDisplay.title)){
       changeText = "Favourites";
@@ -83,6 +89,10 @@ class _MovieShowBodyState extends State<MovieShowBody> {
                           ),
                           label: Text(changeText),
                           onPressed: () {
+                            //onPressed method to check whether if the current state has any existing movie or show
+                            //Checks whether if the current element has existing movie or show
+                            //if not it will be added to the favouriteslist. But if there is already a existing movie or show inside
+                            //it allows the users to unfavourite it, to call the deleteFavourites function to remove it from the list
                             if (favouritesList.getFavouritesList().every((element) =>
                             element.title != widget.movieshowDisplay.title))
                             {
@@ -91,8 +101,14 @@ class _MovieShowBodyState extends State<MovieShowBody> {
                                 Text(changeText);
                               });
                               favouritesList.addToFavourites(widget.movieshowDisplay);
+                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                content: Text('Added to favourites!'),
+                              ));
                             }else{
                               favouritesList.deleteFavourite(widget.movieshowDisplay);
+                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                content: Text('Unfavourited!'),
+                              ));
                             }
                           },
                         ),
@@ -104,7 +120,11 @@ class _MovieShowBodyState extends State<MovieShowBody> {
                                 color: const Color(0xFFFFCCBC),
                                 child: InkWell(
                                   splashColor: Colors.white,
-                                  onTap: () {},
+                                  onTap: () {
+                                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                      content: Text('Copied to clipboard for sharing!'),
+                                    ));
+                                  },
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
@@ -126,6 +146,8 @@ class _MovieShowBodyState extends State<MovieShowBody> {
               Card(
                 child: Container(
                   margin: EdgeInsets.all(8),
+                  // YoutubePlayerController will call the youtube link from the selected movieshowDisplay.trailer.
+                  // if called successfully video will be outputted onto the details page
                   child: YoutubePlayer(controller: YoutubePlayerController(
                       initialVideoId: YoutubePlayer.convertUrlToId(widget.movieshowDisplay.trailer)!,
                     flags: YoutubePlayerFlags(

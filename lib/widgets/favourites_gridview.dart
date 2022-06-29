@@ -14,6 +14,7 @@ class FavouritesGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //Calls the provider for favouriteslist as well as movieshowlist
     FavouritesList favouritesList = Provider.of<FavouritesList>(context);
     MovieShowList movieShowList = Provider.of<MovieShowList>(context);
 
@@ -22,18 +23,21 @@ class FavouritesGridView extends StatelessWidget {
       child:
       GridView.builder(itemBuilder: (ctx, i) {
         return ClipRRect
-          (borderRadius: BorderRadius.circular(30.0),
+          (borderRadius: BorderRadius.circular(0.0),
             child: GridTile(child: GestureDetector
               (onTap: (){MovieShowDetails.goToDetails(context, movieshowList[i]);
+                //onTap method is used to check what current index is the movie/show the user is currently pressing
             },
-              child: Image.network(movieshowList[i].poster),
+              child: Container(height: 200,
+                  child: Card(child: Image.network(movieshowList[i].poster, fit: BoxFit.cover))),
+              //Shows the poster for each movie and show based on their index
             ),
             )
         );},
         itemCount: movieshowList.length,
         gridDelegate: const
         SliverGridDelegateWithFixedCrossAxisCount(
-          childAspectRatio: (120 / 120),
+          childAspectRatio: (75 / 100),
           crossAxisCount: 2,
           crossAxisSpacing: 10.0,
           mainAxisSpacing: 5.0,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:popwatch/main_with_user.dart';
 import 'package:popwatch/screens/signin_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -12,9 +13,10 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
 
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
-  final TextEditingController password = TextEditingController();
+  final TextEditingController password = TextEditingController(); // TextEditingController is used to compare between the password and confirm password when printed out
   final TextEditingController confirmPassword = TextEditingController();
 
+  // check if there is any values in the validation
   void validate(){
     if(formkey.currentState!.validate()){
       print("validated");
@@ -66,6 +68,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
                     child: Container(
                       child: TextFormField(
+                        // Validator is used to check if there is any values within the TextFormField
                         validator: MultiValidator([
                           RequiredValidator(errorText: "* Required"),
                         ]),
@@ -83,6 +86,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
                     child: Container(
                       child: TextFormField(
+                        // Validator is used to check if there is any values within the TextFormField
                         validator: MultiValidator([
                           RequiredValidator(errorText: "* Required"),
                         ]),
@@ -103,6 +107,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         padding: const EdgeInsets.only(left: 0.0),
                         child: TextFormField(
                           validator: MultiValidator([
+                            // Validator is used to check if there is any values within the TextFormField
+                            // For EmailValidator is able to check whether it is a valid email or not with it is checking the @ and the .com
                             RequiredValidator(errorText: "* Required"),
                             EmailValidator(errorText: "Enter valid email id"),
                           ]
@@ -155,6 +161,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           controller: confirmPassword,
                           keyboardType: TextInputType.text,
                           validator: (value){
+                            //Validator calls the TextEditingController and print out both passwords to compare with eachother
+                            //If it fails it will return as "Password Does not Match"
                             if(value!.isEmpty)
                             {
                               return 'Please re-enter password';
@@ -198,10 +206,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                       onTap: () {
+                        //formkey checks whether if there is any values currently in the TextFormView
+                        // if so will be routed to the MainScreenWithUser
                         if (formkey.currentState!.validate()){
                           Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => SignInScreen())
+                              MaterialPageRoute(builder: (context) => MainScreenWithUser())
                           );
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            content: Text('Registered!'),
+                          ));
                         }
                       }
                   ),
