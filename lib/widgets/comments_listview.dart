@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:popwatch/lists/comments_list.dart';
-import 'package:popwatch/models/commets.dart';
+import 'package:popwatch/models/comments.dart';
 import 'package:popwatch/screens/editcomment.dart';
 import 'package:provider/provider.dart';
 
 class CommentsListView extends StatefulWidget {
 
-  CommentsListView( {Key? key}) : super(key: key);
+  CommentsListView( {Key? key, required this.movieTitle}) : super(key: key);
+
+  final String movieTitle;
 
   @override
   State<CommentsListView> createState() => _CommentsListViewState();
@@ -15,12 +17,14 @@ class CommentsListView extends StatefulWidget {
 class _CommentsListViewState extends State<CommentsListView> {
   @override
   Widget build(BuildContext context) {
-    CommentsList commentsList = Provider.of<CommentsList>(context);
+    CommentsList commentsProvider = Provider.of<CommentsList>(context);
+    var commentsList = Provider.of<CommentsList>(context).getComments().where((element) => element.movieTitle == widget.movieTitle).toList();
+
 
     return Scaffold(
       body: ListView.builder(
-        itemCount: commentsList.getComments().length, itemBuilder: (ctx, i){
-          final commetsList = commentsList.getComments()[i];
+        itemCount: commentsList.length, itemBuilder: (ctx, i){
+          final commetsList = commentsList[i];
         return Card(
           child: Dismissible(
             background: Container(
@@ -30,7 +34,7 @@ class _CommentsListViewState extends State<CommentsListView> {
             key: UniqueKey(),
             onDismissed: (direction) {
               setState((){
-                commentsList.deleteComment(i);
+                commentsProvider.deleteComment(i);
               });
             },
             child: ListTile(
@@ -45,7 +49,7 @@ class _CommentsListViewState extends State<CommentsListView> {
                 icon: Icon(Icons.edit, color: Color(0xFFFFCCBC), size:25),
                 onPressed: (){
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => EditComment(commentsList.getComments()))
+                      MaterialPageRoute(builder: (context) => EditComment(comments: commentsProvider.getComments()[i], movieTitle: widget.movieTitle,))
                   );
                 },
               ),

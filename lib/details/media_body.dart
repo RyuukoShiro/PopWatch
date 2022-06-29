@@ -164,7 +164,7 @@ class _MovieShowBodyState extends State<MovieShowBody> {
                         label: Text("Add comment"),
                         onPressed: () {
                           Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => AddComment(commentsList.getComments()))
+                              MaterialPageRoute(builder: (context) => AddComment(commentsList: commentsList.getComments(), movieTitle: widget.movieshowDisplay.title ))
                           );
                         },
                       )],
@@ -176,7 +176,7 @@ class _MovieShowBodyState extends State<MovieShowBody> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(height:300, child: CommentsListView()),
+                    Container(height:300, child: CommentsListView(movieTitle: widget.movieshowDisplay.title,)),
                   ],
                 ),
               ),

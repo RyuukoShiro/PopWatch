@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:popwatch/models/commets.dart';
+import 'package:popwatch/models/comments.dart';
 
 class CommentsList with ChangeNotifier{
 
-  List<Comments> commentsList = [
-  ];
+  List<Comments> commentsList = [];
 
-  void addComments(profileicon, username, description) {
+  void addComments(movieTitle, profileicon, username, description) {
     commentsList.insert(0,
         Comments(
+          movieTitle: movieTitle,
           profileicon: profileicon,
           username: username,
           description: description,
@@ -18,6 +18,11 @@ class CommentsList with ChangeNotifier{
 
   void deleteComment(i){
     commentsList.removeAt(i);
+    notifyListeners();
+  }
+
+  void editComment(Comments comments){
+    commentsList[commentsList.indexWhere((element) => element.username == comments.username)] = comments;
     notifyListeners();
   }
 

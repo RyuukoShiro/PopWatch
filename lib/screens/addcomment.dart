@@ -3,12 +3,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:popwatch/lists/comments_list.dart';
-import 'package:popwatch/models/commets.dart';
+import 'package:popwatch/models/comments.dart';
 import 'package:provider/provider.dart';
 
 class AddComment extends StatefulWidget {
-  AddComment(this.commentsList, {Key? key}) : super(key: key);
   List<Comments> commentsList;
+  final String movieTitle;
+  AddComment({Key? key, required this.movieTitle, required this.commentsList}) : super(key: key);
 
   @override
   State<AddComment> createState() => _AddCommentState();
@@ -30,7 +31,7 @@ class _AddCommentState extends State<AddComment> {
       }
       if (kDebugMode) {
       }
-      commentsList.addComments(profileicon, username, description);
+      commentsList.addComments(widget.movieTitle, profileicon, username, description);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Comment is added!'),
       ));

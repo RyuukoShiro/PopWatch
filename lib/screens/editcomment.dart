@@ -1,10 +1,42 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:popwatch/models/commets.dart';
+import 'package:popwatch/lists/comments_list.dart';
+import 'package:popwatch/models/comments.dart';
+import 'package:provider/provider.dart';
 
-class EditComment extends StatelessWidget {
-  EditComment(this.commentsList, {Key? key}) : super(key: key);
-  List<Comments> commentsList;
+class EditComment extends StatefulWidget {
+  final String movieTitle;
+  EditComment({Key? key, required this.movieTitle, required this.comments}) : super(key: key);
+  final Comments comments;
+
+  @override
+  State<EditComment> createState() => _EditCommentState();
+}
+
+class _EditCommentState extends State<EditComment> {
+
+  String? profileicon;
+  String? username;
+  String? description;
+
+  void editComments(CommentsList commentsList) {
+    bool isValid = formkey.currentState!.validate();
+    if (isValid) {
+      formkey.currentState!.save();
+      if (kDebugMode) {
+      }
+      if (kDebugMode) {
+      }
+      commentsList.editComment(Comments(movieTitle : widget.movieTitle, profileicon : widget.comments.profileicon, username : widget.comments.username, description: description!));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Comment is edited!'),
+      ));
+      Navigator.pop(context);
+      formkey.currentState!.reset();
+    }
+    FocusScope.of(context).unfocus();
+  }
 
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
@@ -18,6 +50,7 @@ class EditComment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CommentsList comments = Provider.of<CommentsList>(context);
     return Scaffold(
         appBar: AppBar(
           title: const Text('Edit Comment', textAlign: TextAlign.center,),
@@ -52,6 +85,7 @@ class EditComment extends StatelessWidget {
                                     child: Padding(
                                       padding: const EdgeInsets.only(left: 0.0),
                                       child: TextFormField(
+                                        initialValue: widget.comments.profileicon,
                                         validator: MultiValidator([
                                           RequiredValidator(errorText: "* Required"),
                                         ]
@@ -73,6 +107,7 @@ class EditComment extends StatelessWidget {
                                     child: Padding(
                                       padding: const EdgeInsets.only(left: 0.0),
                                       child: TextFormField(
+                                        initialValue: widget.comments.username,
                                         validator: MultiValidator([
                                           RequiredValidator(errorText: "* Required"),
                                         ]
@@ -98,6 +133,9 @@ class EditComment extends StatelessWidget {
                                           RequiredValidator(errorText: "* Required"),
                                         ]
                                         ),
+                                        onSaved:(value){
+                                          description = value as String;
+                                        },
                                         decoration: InputDecoration(
                                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                                           filled: true,
@@ -131,6 +169,7 @@ class EditComment extends StatelessWidget {
                                     ),
                                     onTap: () {
                                       if (formkey.currentState!.validate()){
+                                        editComments(comments);
                                       }
                                       else{
 
