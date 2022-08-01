@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "468263162363",
+    "project_id": "popwatch-87b24",
+    "storage_bucket": "popwatch-87b24.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:468263162363:android:352ccf2dd81ea1c8203b5e",
+        "android_client_info": {
+          "package_name": "com.example.popwatch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "468263162363-u71cb7hjscq2v2fhs4vq7pk98237aqb7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBW4m4QrOWcehGpj4bMPvEeaS_g6Wz86B4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "468263162363-u71cb7hjscq2v2fhs4vq7pk98237aqb7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
