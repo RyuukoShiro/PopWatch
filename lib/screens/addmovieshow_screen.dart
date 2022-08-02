@@ -15,6 +15,7 @@ class _AddMovieShowState extends State<AddMovieShow> {
   // Creates a globalkey for formkey to check for validation
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
+  String? id;
   String? title;
   String? description;
   String? runtime;
@@ -35,7 +36,7 @@ class _AddMovieShowState extends State<AddMovieShow> {
       if (kDebugMode) {
       }
       //calls the function addComments from the movieshowList, and output snackbar when succesfully added.
-      movieshowList.addMoviesShows(title, description, runtime, company,
+      movieshowList.addMoviesShows(id, title, description, runtime, company,
           genre, trailer, poster, cover, type);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Movies/Show is added!'),
