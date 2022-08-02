@@ -1,8 +1,9 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:popwatch/models/movie_show.dart';
 
-class MovieShowList with ChangeNotifier{
+class MovieShowProvider with ChangeNotifier{
 
   //
   List<MoviesAndShow> movieshowList = [ // Get data from the list
@@ -158,4 +159,30 @@ class MovieShowList with ChangeNotifier{
   }
 // searchString is for the search on the list_screen
   String searchString = "";
+
+  List<MoviesAndShow> MoviesShowsList = [];
+
+
+  MovieShowProvider() {
+    FirebaseFirestore.instance.collection('media')
+        .snapshots()
+        .listen((event){
+          for (var change in event.docChanges) {
+            MoviesAndShow movieshow = MoviesAndShow.fromMap(change.doc.data()!, change.doc.id);
+            switch (change.type) {
+              case DocumentChangeType.added:
+                MoviesShowsList.add(movieshow);
+                break;
+                case DocumentChangeType.modified:
+                  MoviesShowsList.removeWhere((element) => element.id == movieshow.id);
+                  MoviesShowsList.add(movieshow);
+                  break;
+                case DocumentChangeType.removed:
+                  MoviesShowsList.removeWhere((element) => element.id == movieshow.id);
+                  break;
+            }
+          }
+    });
+  }
+
 }

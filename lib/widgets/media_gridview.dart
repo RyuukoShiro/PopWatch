@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:popwatch/lists/movie_show_list.dart';
 import 'package:popwatch/models/movie_show.dart';
 import 'package:popwatch/services/firestore_service.dart';
+import 'package:provider/provider.dart';
 import '../screens/movieshow_details.dart';
 
 class MediaGridView extends StatelessWidget {
@@ -13,10 +15,9 @@ class MediaGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    FirestoreService fsService = FirestoreService();
-    return StreamBuilder<List<MoviesAndShow>>(
-      stream:
-      builder: (context, snapshot) {
+
+    return Consumer(
+      builder: (context, MovieShowProvider provider, Widget? child) {
         return Container(
           margin: EdgeInsets.only(top: 20),
           child:
@@ -30,9 +31,9 @@ class MediaGridView extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                    height: 200,
+                        height: 200,
                         child: Image.network(movieshowList[i].poster, fit: BoxFit.fitHeight)
-                            //Shows the poster for each movie and show based on their index
+                      //Shows the poster for each movie and show based on their index
                     ),
                   ],
                 ),

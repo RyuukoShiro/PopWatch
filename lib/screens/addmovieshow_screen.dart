@@ -27,7 +27,7 @@ class _AddMovieShowState extends State<AddMovieShow> {
   String? type;
 
   // Calls addMoviesShows from the movie_show_list and checks whether if theres is values.
-  void addMoviesShows(MovieShowList movieshowList) {
+  void addMoviesShows(MovieShowProvider movieshowList) {
     bool isValid = formkey.currentState!.validate();
     if (isValid) {
       formkey.currentState!.save();
@@ -58,7 +58,7 @@ class _AddMovieShowState extends State<AddMovieShow> {
 
   @override
   Widget build(BuildContext context) {
-    MovieShowList movieshowList = Provider.of<MovieShowList>(context);
+    MovieShowProvider movieshowList = Provider.of<MovieShowProvider>(context);
     // Calls the provider of MovieShowList
 
     return Scaffold(

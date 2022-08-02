@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:popwatch/lists/comments_list.dart';
@@ -17,46 +18,52 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+
   static final ValueNotifier<ThemeMode> themeNotifier =
   ValueNotifier(ThemeMode.light);
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context,) {
-    return MultiProvider(providers: [
-    ChangeNotifierProvider<MovieShowList>(create: (context) => MovieShowList()),
-      ChangeNotifierProvider<FavouritesList>(create: (context) => FavouritesList()),
-      ChangeNotifierProvider<CommentsList>(create: (context) => CommentsList()),
-    ],
-      //The MultiProvider ensures that each provider is working on the page which it contains
-      //ThemeNotifier allows the users to switch between light mode and dark mode
-      child: ValueListenableBuilder<ThemeMode>(
-        valueListenable: themeNotifier,
-        builder: (_, ThemeMode currentMode, __){
-          return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              theme: ThemeData(
-                  appBarTheme: AppBarTheme(
-                    color: const Color(0xFFFFCCBC),
-                  )
-              ),
-              darkTheme: ThemeData.dark(),
-              themeMode: currentMode,
-              home: SplashScreen(),
-              routes: {
-                ListScreen.routeName: (_){
-                  return ListScreen();
-                },
-                Home.routeName: (_){
-                  return Home();
-                },
-                FavouritesScreen.routeName: (_){
-                  return FavouritesScreen();
-                }
-              }
-          );
-        },
-      ),
+    return FutureBuilder(
+      future: Firebase.initializeApp(),
+      builder: (context, snapshot) {
+        return MultiProvider(providers: [
+        ChangeNotifierProvider<MovieShowProvider>(create: (context) => MovieShowProvider()),
+          ChangeNotifierProvider<FavouritesList>(create: (context) => FavouritesList()),
+          ChangeNotifierProvider<CommentsList>(create: (context) => CommentsList()),
+        ],
+          //The MultiProvider ensures that each provider is working on the page which it contains
+          //ThemeNotifier allows the users to switch between light mode and dark mode
+          child: ValueListenableBuilder<ThemeMode>(
+            valueListenable: themeNotifier,
+            builder: (_, ThemeMode currentMode, __){
+              return MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  theme: ThemeData(
+                      appBarTheme: AppBarTheme(
+                        color: const Color(0xFFFFCCBC),
+                      )
+                  ),
+                  darkTheme: ThemeData.dark(),
+                  themeMode: currentMode,
+                  home: SplashScreen(),
+                  routes: {
+                    ListScreen.routeName: (_){
+                      return ListScreen();
+                    },
+                    Home.routeName: (_){
+                      return Home();
+                    },
+                    FavouritesScreen.routeName: (_){
+                      return FavouritesScreen();
+                    }
+                  }
+              );
+            },
+          ),
+        );
+      }
     );
   }
 }

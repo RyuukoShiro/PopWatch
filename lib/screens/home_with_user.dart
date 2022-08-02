@@ -15,7 +15,7 @@ class HomeWithUser extends StatefulWidget {
 class _HomeWithUserState extends State<HomeWithUser> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    List<MoviesAndShow> movieshowList = Provider.of<MovieShowList>(context).getMoviesShows();
+    List<MoviesAndShow> movieshowList = Provider.of<MovieShowProvider>(context).getMoviesShows();
     //Calls the provider list based on getMoviesShows
 
     return Scaffold(

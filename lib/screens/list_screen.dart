@@ -15,10 +15,11 @@ class ListScreen extends StatefulWidget {
 
 class _ListScreenState extends State<ListScreen> {
 
+  TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
 
-    MovieShowList movieshowList = Provider.of<MovieShowList>(context);
+    MovieShowProvider movieshowList = Provider.of<MovieShowProvider>(context);
     //Calls the provider for movieshowList based on context
     return Scaffold(
       body: SingleChildScrollView(
@@ -30,6 +31,7 @@ class _ListScreenState extends State<ListScreen> {
             SizedBox(height: 10),
             Padding(padding: const EdgeInsets.symmetric(horizontal:15.0),
             child: TextField(
+              controller: searchController,
               onChanged: (value){
                 setState((){
                   movieshowList.searchString = value.toLowerCase(); //Calls the searchString in movieshowList
@@ -67,7 +69,7 @@ class _ListScreenState extends State<ListScreen> {
                     Container(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: [Container(height:580, width: 380, child: MovieShowGridView(movieshowList.getMoviesShows()))],
+                        children: [Container(height:580, width: 380, child: MovieShowGridView(movieshowList.getMoviesShows(), searchController: searchController,))],
                         //child: MovieShowGridview calls the gridview from the dart flower to display the gridview
                       )
                     )

@@ -17,7 +17,6 @@ class MoviesAndShow {
 
 
   factory MoviesAndShow.fromMap(Map <String, dynamic> snapshot, String id) => MoviesAndShow(
-
       id: id,
       title: snapshot['title'] ?? '',
       description: snapshot['description'] ?? '',

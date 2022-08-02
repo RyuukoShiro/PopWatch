@@ -8,7 +8,6 @@ class MovieShowDetails extends StatelessWidget {
 
   const MovieShowDetails({Key? key, required this.movieshowDisplay}) : super(key: key);
   final MoviesAndShow movieshowDisplay;
-
   @override
 
   Widget build(BuildContext context) {
