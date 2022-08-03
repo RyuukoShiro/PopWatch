@@ -20,10 +20,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void validate(){
     if(formkey.currentState!.validate()){
       print("validated");
+
     }else{
       print("Not Validated");
     }
   }
+
+  String? username;
+  String? firstname;
+  String? lastname;
+  String? email;
+  String? password1;
+  String? confirmPassword1;
+
 
   @override
   Widget build(BuildContext context) {

@@ -24,7 +24,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         List<MoviesAndShow> moviesList =
             provider.MoviesShowsList.where((element) => element.type == "Movie")
                 .toList();
-
         List<MoviesAndShow> showsList =
             provider.MoviesShowsList.where((element) => element.type == "Show")
                 .toList();

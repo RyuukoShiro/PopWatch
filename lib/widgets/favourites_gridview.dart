@@ -15,7 +15,7 @@ class FavouritesGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //Calls the provider for favouriteslist as well as movieshowlist
-    FavouritesList favouritesList = Provider.of<FavouritesList>(context);
+    FavouritesListProvider favouritesList = Provider.of<FavouritesListProvider>(context);
     MovieShowProvider movieShowList = Provider.of<MovieShowProvider>(context);
 
     return Container(

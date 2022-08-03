@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       builder: (context, snapshot) {
         return MultiProvider(providers: [
         ChangeNotifierProvider<MovieShowProvider>(create: (context) => MovieShowProvider()),
-          ChangeNotifierProvider<FavouritesList>(create: (context) => FavouritesList()),
+          ChangeNotifierProvider<FavouritesListProvider>(create: (context) => FavouritesListProvider()),
           ChangeNotifierProvider<CommentsList>(create: (context) => CommentsList()),
         ],
           //The MultiProvider ensures that each provider is working on the page which it contains

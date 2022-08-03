@@ -11,7 +11,7 @@ class FavouritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FavouritesList favouritesList = Provider.of<FavouritesList>(context);
+    FavouritesListProvider favouritesList = Provider.of<FavouritesListProvider>(context);
 
     return Scaffold(
       body: SingleChildScrollView( //fyi most of the screens uses SingleChildScrolLView so there won't be any yellow bar errors

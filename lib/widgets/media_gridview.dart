@@ -10,6 +10,7 @@ class MediaGridView extends StatelessWidget {
   MediaGridView(this.movieshowList, {Key? key}) : super(key: key);
   List<MoviesAndShow> movieshowList;
 // Calls the list movieshowlist
+
   @override
   Widget build(BuildContext context) {
     return Container(

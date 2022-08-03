@@ -34,7 +34,7 @@ class _MovieShowBodyState extends State<MovieShowBody> {
 
     Size size = MediaQuery.of(context).size;
     //Calls the favouritelist provider from FavouritesList
-     FavouritesList favouritesList = Provider.of<FavouritesList>(context);
+     FavouritesListProvider favouritesList = Provider.of<FavouritesListProvider>(context);
      //Checks whether if the current element has existing movie or show
     //if not it will be added to the favouriteslist. But if there is already a existing movie or show inside
     //it allows the users to unfavourite it, to call the deleteFavourites function to remove it from the list
