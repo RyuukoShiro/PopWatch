@@ -29,6 +29,7 @@ class MovieShowGridView extends StatelessWidget {
           movieshowList = provider.MoviesShowsList.where((element) =>
               element.title.toLowerCase().contains(searchController.text.toLowerCase())).toList();
         }
+
         return Container(
           margin: EdgeInsets.only(top: 30),
           child:

@@ -4,6 +4,7 @@ import 'package:popwatch/models/movie_show.dart';
 class FirestoreService{
 
 Stream<List<MoviesAndShow>> getMovieShowList() {
+
     return FirebaseFirestore.instance
         .collection('media')
         .snapshots()
