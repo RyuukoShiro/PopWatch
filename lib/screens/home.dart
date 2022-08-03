@@ -100,7 +100,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                             children: [
                               Container(
                                 height: 220,
-                                child: showsList.length == 0 ? SizedBox() : MediaGridView(showsList),
+                                child: showsList.length == 0 ? CircularProgressIndicator() : MediaGridView(showsList),
                               ),
                               // Calls the MediaGridView for it to show on the home.dart, and checks for what type of media it is, whether it is a movie or show
                               // If its a show, the gridview will show only shows.

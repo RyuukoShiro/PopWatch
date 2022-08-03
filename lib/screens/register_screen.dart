@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -18,6 +19,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController password = TextEditingController(); // TextEditingController is used to compare between the password and confirm password when printed out
   final TextEditingController confirmPassword = TextEditingController();
   final TextEditingController email = TextEditingController();
+  final TextEditingController username = TextEditingController();
+  final TextEditingController firstname = TextEditingController();
+  final TextEditingController lastname = TextEditingController();
 
   // check if there is any values in the validation
   void validate(){
@@ -34,16 +38,38 @@ class _RegisterScreenState extends State<RegisterScreen> {
     password.dispose();
     confirmPassword.dispose();
     email.dispose();
+    username.dispose();
+    firstname.dispose();
+    lastname.dispose();
     super.dispose();
   }
 
+  // Future signup is used to authenticate the user
   Future signUp() async {
     if (passwordConfirmed()) {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: email.text.trim(),
           password: password.text.trim()
       );
+
+      // add user details to firestore
+      addUserDetailsToFireStore(
+          email.text.trim(),
+          username.text.trim(),
+          firstname.text.trim(),
+          lastname.text.trim()
+      );
     }
+  }
+
+  Future addUserDetailsToFireStore(
+      String email, String username, String firstname, String lastname) async{
+    await FirebaseFirestore.instance.collection('users').add({
+      'email': email,
+      'username': username,
+      'firstname': firstname,
+      'lastname': lastname,
+    });
   }
 
   bool passwordConfirmed(){
@@ -73,59 +99,62 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: 150.0,
                     width: 175.0,
                   ),
-                  // SizedBox(height: 5),
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  //   child: Container(
-                  //     child: TextFormField(
-                  //       validator: MultiValidator([
-                  //         RequiredValidator(errorText: "* Required"),
-                  //       ]),
-                  //       decoration: InputDecoration(
-                  //         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                  //         filled: true,
-                  //         fillColor: Colors.grey[200],
-                  //         hintText: 'Username',
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                  // SizedBox(height: 15),
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  //   child: Container(
-                  //     child: TextFormField(
-                  //       // Validator is used to check if there is any values within the TextFormField
-                  //       validator: MultiValidator([
-                  //         RequiredValidator(errorText: "* Required"),
-                  //       ]),
-                  //       decoration: InputDecoration(
-                  //         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                  //         filled: true,
-                  //         fillColor: Colors.grey[200],
-                  //         hintText: 'First Name',
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                  // SizedBox(height: 15),
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  //   child: Container(
-                  //     child: TextFormField(
-                  //       // Validator is used to check if there is any values within the TextFormField
-                  //       validator: MultiValidator([
-                  //         RequiredValidator(errorText: "* Required"),
-                  //       ]),
-                  //       decoration: InputDecoration(
-                  //         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                  //         filled: true,
-                  //         fillColor: Colors.grey[200],
-                  //         hintText: 'Last Name',
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
+                  SizedBox(height: 5),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: Container(
+                      child: TextFormField(
+                        validator: MultiValidator([
+                          RequiredValidator(errorText: "* Required"),
+                        ]),
+                        controller: username,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                          filled: true,
+                          fillColor: Colors.grey[200],
+                          hintText: 'Username',
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: Container(
+                      child: TextFormField(
+                        // Validator is used to check if there is any values within the TextFormField
+                        validator: MultiValidator([
+                          RequiredValidator(errorText: "* Required"),
+                        ]),
+                        controller: firstname,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                          filled: true,
+                          fillColor: Colors.grey[200],
+                          hintText: 'First Name',
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: Container(
+                      child: TextFormField(
+                        // Validator is used to check if there is any values within the TextFormField
+                        validator: MultiValidator([
+                          RequiredValidator(errorText: "* Required"),
+                        ]),
+                        controller: lastname,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                          filled: true,
+                          fillColor: Colors.grey[200],
+                          hintText: 'Last Name',
+                        ),
+                      ),
+                    ),
+                  ),
                   SizedBox(height: 15),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
