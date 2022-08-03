@@ -1,10 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:popwatch/main_with_user.dart';
 import 'package:popwatch/screens/signin_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+  final VoidCallback showLoginScreen;
+  const RegisterScreen({Key? key, required this.showLoginScreen}) : super(key: key);
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -15,6 +17,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final TextEditingController password = TextEditingController(); // TextEditingController is used to compare between the password and confirm password when printed out
   final TextEditingController confirmPassword = TextEditingController();
+  final TextEditingController email = TextEditingController();
 
   // check if there is any values in the validation
   void validate(){
@@ -26,21 +29,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
-  String? username;
-  String? firstname;
-  String? lastname;
-  String? email;
-  String? password1;
-  String? confirmPassword1;
+  @override
+  void dispose() {
+    password.dispose();
+    confirmPassword.dispose();
+    email.dispose();
+    super.dispose();
+  }
+
+  Future signUp() async {
+    if (passwordConfirmed()) {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: email.text.trim(),
+          password: password.text.trim()
+      );
+    }
+  }
+
+  bool passwordConfirmed(){
+    if (password.text.trim() == confirmPassword.text.trim()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Register', textAlign: TextAlign.center,),
-        automaticallyImplyLeading: true,
-        leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: () => Navigator.pop(context)
-        ),
       ),
       backgroundColor: Color(0xFFFFCCBC),
       body: SingleChildScrollView(
@@ -52,62 +70,62 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset('assets/images/popcorn.png',
-                    height: 100.0,
-                    width: 125.0,
+                    height: 150.0,
+                    width: 175.0,
                   ),
-                  SizedBox(height: 5),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: Container(
-                      child: TextFormField(
-                        validator: MultiValidator([
-                          RequiredValidator(errorText: "* Required"),
-                        ]),
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                          filled: true,
-                          fillColor: Colors.grey[200],
-                          hintText: 'Username',
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 15),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: Container(
-                      child: TextFormField(
-                        // Validator is used to check if there is any values within the TextFormField
-                        validator: MultiValidator([
-                          RequiredValidator(errorText: "* Required"),
-                        ]),
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                          filled: true,
-                          fillColor: Colors.grey[200],
-                          hintText: 'First Name',
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 15),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: Container(
-                      child: TextFormField(
-                        // Validator is used to check if there is any values within the TextFormField
-                        validator: MultiValidator([
-                          RequiredValidator(errorText: "* Required"),
-                        ]),
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                          filled: true,
-                          fillColor: Colors.grey[200],
-                          hintText: 'Last Name',
-                        ),
-                      ),
-                    ),
-                  ),
+                  // SizedBox(height: 5),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  //   child: Container(
+                  //     child: TextFormField(
+                  //       validator: MultiValidator([
+                  //         RequiredValidator(errorText: "* Required"),
+                  //       ]),
+                  //       decoration: InputDecoration(
+                  //         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  //         filled: true,
+                  //         fillColor: Colors.grey[200],
+                  //         hintText: 'Username',
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  // SizedBox(height: 15),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  //   child: Container(
+                  //     child: TextFormField(
+                  //       // Validator is used to check if there is any values within the TextFormField
+                  //       validator: MultiValidator([
+                  //         RequiredValidator(errorText: "* Required"),
+                  //       ]),
+                  //       decoration: InputDecoration(
+                  //         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  //         filled: true,
+                  //         fillColor: Colors.grey[200],
+                  //         hintText: 'First Name',
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  // SizedBox(height: 15),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  //   child: Container(
+                  //     child: TextFormField(
+                  //       // Validator is used to check if there is any values within the TextFormField
+                  //       validator: MultiValidator([
+                  //         RequiredValidator(errorText: "* Required"),
+                  //       ]),
+                  //       decoration: InputDecoration(
+                  //         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  //         filled: true,
+                  //         fillColor: Colors.grey[200],
+                  //         hintText: 'Last Name',
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   SizedBox(height: 15),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -122,6 +140,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             EmailValidator(errorText: "Enter valid email id"),
                           ]
                           ),
+                          controller: email,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                             filled: true,
@@ -218,9 +237,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         //formkey checks whether if there is any values currently in the TextFormView
                         // if so will be routed to the MainScreenWithUser
                         if (formkey.currentState!.validate()){
-                          Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => MainScreenWithUser())
-                          );
+                          signUp();
                           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                             content: Text('Registered!'),
                           ));
@@ -247,10 +264,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                           onTap:(){
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => const SignInScreen())
-                            );
+                            widget.showLoginScreen();
                           }
                       )
                     ],

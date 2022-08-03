@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,7 +8,7 @@ import 'package:popwatch/lists/movie_show_list.dart';
 import 'package:popwatch/screens/favourites_screen.dart';
 import 'package:popwatch/screens/home.dart';
 import 'package:popwatch/screens/list_screen.dart';
-import 'package:popwatch/screens/login_register_screen.dart';
+import 'package:popwatch/screens/profile_screen.dart';
 import 'package:popwatch/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -78,6 +79,9 @@ class _MainScreenState extends State<MainScreen> {
   int selectedIndex = 1;
   final screens = [const ListScreen(), Home(), FavouritesScreen()];
   //Current index is on Home(), so when first launched the app will be shown on the Home() screen
+
+  final user = FirebaseAuth.instance.currentUser!;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,7 +94,7 @@ class _MainScreenState extends State<MainScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const LoginRegisterScreen())
+                MaterialPageRoute(builder: (context) => const ProfileScreen())
               );
             },
           ),

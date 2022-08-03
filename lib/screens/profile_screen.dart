@@ -1,9 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:popwatch/main.dart';
 import 'package:popwatch/screens/addmovieshow_screen.dart';
+import 'package:popwatch/screens/signin_screen.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  final user = FirebaseAuth.instance.currentUser!;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +34,7 @@ class ProfileScreen extends StatelessWidget {
                 size: 125,
                 color: Color(0xFFFFFFFF),
               ),
-              Text("Username", style: TextStyle(
+              Text("" + user.email!, style: TextStyle(
                 fontSize: 20,
                 color: Color(0xFFFFFFFF),
                 fontWeight: FontWeight.bold,
@@ -150,12 +159,15 @@ class ProfileScreen extends StatelessWidget {
                             ),)
                       ),
                     ),
-                  ),
-                  onTap: (){
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => MainScreen())
-                    );
-                  }
+                  ), onTap: () {
+                    FirebaseAuth.instance.signOut();
+                    Navigator.pop(context);
+              },
+                  // onTap: (){
+                  //   Navigator.of(context).push(
+                  //       MaterialPageRoute(builder: (context) => MainScreen())
+                  //   );
+                  // }
               ),
             ],
           ),

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:popwatch/main.dart';
+import 'package:popwatch/auth/authchecker.dart';
 import 'package:popwatch/screens/home.dart';
 
 
@@ -20,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     super.initState();
     Timer(Duration(seconds: 3), ()=>Navigator.pushReplacement
-      (context, MaterialPageRoute(builder: (context)=>MainScreen())));
+      (context, MaterialPageRoute(builder: (context)=> AuthCheck())));
   }
   @override
   Widget build(BuildContext context) {

@@ -1,12 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:popwatch/main_with_user.dart';
+import 'package:popwatch/screens/forgetpassword_screen.dart';
 import 'package:popwatch/screens/home_with_user.dart';
 import 'package:popwatch/screens/profile_screen.dart';
 import 'package:popwatch/screens/register_screen.dart';
 
 class SignInScreen extends StatefulWidget {
-  const SignInScreen({Key? key}) : super(key: key);
+
+  final VoidCallback showRegisterScreen;
+  const SignInScreen({Key? key, required this.showRegisterScreen}) : super(key: key);
 
   @override
   State<SignInScreen> createState() => _SignInScreenState();
@@ -24,14 +28,27 @@ class _SignInScreenState extends State<SignInScreen> {
     }
   }
 
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  Future signIn() async{
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim()
+    );
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login', textAlign: TextAlign.center,),
-        automaticallyImplyLeading: true,
-        leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: () => Navigator.pop(context)
-        ),
       ),
       backgroundColor: Color(0xFFFFCCBC),
       body: SingleChildScrollView(
@@ -66,6 +83,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 EmailValidator(errorText: "Enter valid email id"),
                               ]
                               ),
+                            controller: _emailController,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                               filled: true,
@@ -92,6 +110,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                   errorText:
                                   "Password should not be greater than 15 characters")
                             ]),
+                            controller: _passwordController,
                             obscureText: true,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -103,24 +122,51 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 25),
+                    SizedBox(height: 10),
+                    Padding(padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        GestureDetector(
+                          child: Text('Forgot Password?',
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Color(0xFFFFAB91),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context){
+                                return ForgetPasswordScreen();
+                              })
+                            );
+                          },
+                        ),
+                      ],
+                    )),
+                    SizedBox(height: 10),
                     InkWell(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                        child: Container(
-                          padding: EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            color: Color(0xFFFFAB91),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Center(
-                            child:
-                            Text("Sign In",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                              ),),
+                        child: GestureDetector(
+                          // onTap: signIn,
+                          child: Container(
+                            padding: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              color: Color(0xFFFFAB91),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Center(
+                              child:
+                              Text("Sign In",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),),
+                            ),
                           ),
                         ),
                       ),
@@ -128,9 +174,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         //formkey checks whether if there is any values currently in the TextFormView
                         // if so will be routed to the MainScreenWithUser
                         if (formkey.currentState!.validate()){
-                          Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => MainScreenWithUser()),
-                          );
+                          signIn();
                           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                             content: Text('Login Successful!'),
                           ));
@@ -156,12 +200,14 @@ class _SignInScreenState extends State<SignInScreen> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            onTap:(){
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => const RegisterScreen())
-                              );
+                            onTap:() {
+                              widget.showRegisterScreen();
                             }
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(builder: (context) => const RegisterScreen())
+                              // );
+
                         )
                       ],
                     )

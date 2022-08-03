@@ -6,7 +6,6 @@ import 'package:popwatch/lists/movie_show_list.dart';
 import 'package:popwatch/screens/favourites_screen.dart';
 import 'package:popwatch/screens/home.dart';
 import 'package:popwatch/screens/list_screen.dart';
-import 'package:popwatch/screens/login_register_screen.dart';
 import 'package:popwatch/screens/profile_screen.dart';
 import 'package:popwatch/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
