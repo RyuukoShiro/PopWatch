@@ -16,11 +16,12 @@ class EditComment extends StatefulWidget {
 
 class _EditCommentState extends State<EditComment> {
 
+  String? id;
   String? profileicon;
   String? username;
   String? description;
 
-  void editComments(CommentsList commentsList) {
+  void editComments(CommentsListProvider commentsList) {
     bool isValid = formkey.currentState!.validate();
     if (isValid) {
       formkey.currentState!.save();
@@ -28,7 +29,7 @@ class _EditCommentState extends State<EditComment> {
       }
       if (kDebugMode) {
       }
-      commentsList.editComment(Comments(movieTitle : widget.movieTitle, profileicon : widget.comments.profileicon, username : widget.comments.username, description: description!));
+      commentsList.editComment(Comments(id: widget.comments.id, movieTitle : widget.movieTitle, profileicon : widget.comments.profileicon, username : widget.comments.username, description: description!));
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Comment is edited!'),
       ));
@@ -50,7 +51,7 @@ class _EditCommentState extends State<EditComment> {
 
   @override
   Widget build(BuildContext context) {
-    CommentsList comments = Provider.of<CommentsList>(context);
+    CommentsListProvider comments = Provider.of<CommentsListProvider>(context);
     return Scaffold(
         appBar: AppBar(
           title: const Text('Edit Comment', textAlign: TextAlign.center,),

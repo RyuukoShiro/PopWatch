@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:popwatch/lists/comments_list.dart';
 import 'package:popwatch/models/movie_show.dart';
 import 'package:popwatch/screens/addcomment.dart';
+import 'package:popwatch/services/firestore_service.dart';
 import 'package:popwatch/widgets/comments_listview.dart';
 import 'package:provider/provider.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -30,7 +31,7 @@ class _MovieShowBodyState extends State<MovieShowBody> {
   String changeText = "Favourites";
   Widget build(BuildContext context) {
 
-    CommentsList commentsList = Provider.of<CommentsList>(context);
+    CommentsListProvider commentsList = Provider.of<CommentsListProvider>(context);
 
     Size size = MediaQuery.of(context).size;
     //Calls the favouritelist provider from FavouritesList
@@ -44,6 +45,7 @@ class _MovieShowBodyState extends State<MovieShowBody> {
     }else{
       changeText = "Unfavourites";
     }
+    FirestoreService fsService = FirestoreService();
 
     return Column(
       children: <Widget>[
@@ -100,11 +102,23 @@ class _MovieShowBodyState extends State<MovieShowBody> {
                               setState((){
                                 Text(changeText);
                               });
-                              favouritesList.addToFavourites(widget.movieshowDisplay);
+                              fsService.addFavourite(
+                                widget.movieshowDisplay.title,
+                                widget.movieshowDisplay.description,
+                                widget.movieshowDisplay.runtime,
+                                widget.movieshowDisplay.company,
+                                widget.movieshowDisplay.genre,
+                                widget.movieshowDisplay.trailer,
+                                widget.movieshowDisplay.poster,
+                                widget.movieshowDisplay.cover,
+                                widget.movieshowDisplay.type,
+                              );
+                              // favouritesList.addToFavourites(widget.movieshowDisplay);
                               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                                 content: Text('Added to favourites!'),
                               ));
                             }else{
+                              fsService.deleteFavourite(widget.movieshowDisplay.id);
                               favouritesList.deleteFavourite(widget.movieshowDisplay);
                               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                                 content: Text('Unfavourited!'),
@@ -194,13 +208,22 @@ class _MovieShowBodyState extends State<MovieShowBody> {
                   ],
                 ),
               ),
-              Card(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(height:300, child: CommentsListView(movieTitle: widget.movieshowDisplay.title,)),
-                  ],
-                ),
+              StreamBuilder(
+                stream: fsService.getComments(),
+                builder: (context, snapshot) {
+                  return Consumer<CommentsListProvider>(
+                    builder: (BuildContext context, Provider, child) {
+                      return Card(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(height:300, child: CommentsListView(movieTitle: widget.movieshowDisplay.title,)),
+                          ],
+                        ),
+                      );
+                    }
+                  );
+                }
               ),
             ],
           )

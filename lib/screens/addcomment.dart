@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:popwatch/lists/comments_list.dart';
 import 'package:popwatch/models/comments.dart';
+import 'package:popwatch/services/firestore_service.dart';
 import 'package:provider/provider.dart';
 
 class AddComment extends StatefulWidget {
@@ -20,12 +21,15 @@ GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
 class _AddCommentState extends State<AddComment> {
 
+  String? id;
   String? profileicon;
   String? username;
   String? description;
 
+  FirestoreService fsService = FirestoreService();
+
   // function addComments check if the formkey has validation or not.
-  void addComments(CommentsList commentsList) {
+  void addComments(CommentsListProvider commentsList) {
     bool isValid = formkey.currentState!.validate();
     if (isValid) {
       formkey.currentState!.save();
@@ -34,7 +38,8 @@ class _AddCommentState extends State<AddComment> {
       if (kDebugMode) {
       }
       //calls the function addComments from the comments_list, and output snackbar when succesfully added.
-      commentsList.addComments(widget.movieTitle, profileicon, username, description);
+      // commentsList.addComments(id, widget.movieTitle, profileicon, username, description);
+      fsService.addComment(widget.movieTitle, profileicon, username, description);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Comment is added!'),
       ));
@@ -55,7 +60,7 @@ class _AddCommentState extends State<AddComment> {
 
   @override
   Widget build(BuildContext context) {
-    CommentsList commentsList = Provider.of<CommentsList>(context);
+    CommentsListProvider commentsList = Provider.of<CommentsListProvider>(context);
 
     return Scaffold(
       appBar: AppBar(

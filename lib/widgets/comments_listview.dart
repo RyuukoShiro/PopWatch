@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:popwatch/lists/comments_list.dart';
 import 'package:popwatch/models/comments.dart';
 import 'package:popwatch/screens/editcomment.dart';
+import 'package:popwatch/services/firestore_service.dart';
 import 'package:provider/provider.dart';
 
 class CommentsListView extends StatefulWidget {
@@ -18,10 +19,10 @@ class _CommentsListViewState extends State<CommentsListView> {
   @override
   Widget build(BuildContext context) {
     //Calls the provider for CommentsList
-    CommentsList commentsProvider = Provider.of<CommentsList>(context);
+    CommentsListProvider commentsProvider = Provider.of<CommentsListProvider>(context);
     // var commentList is used to call the provider where the current movieTitle which the MovieDetails is in.
-    var commentsList = Provider.of<CommentsList>(context).getComments().where((element) => element.movieTitle == widget.movieTitle).toList();
-
+    var commentsList = Provider.of<CommentsListProvider>(context).getComments().where((element) => element.movieTitle == widget.movieTitle).toList();
+    FirestoreService fsService = FirestoreService();
 
     return Scaffold(
       body: ListView.builder(
@@ -37,7 +38,8 @@ class _CommentsListViewState extends State<CommentsListView> {
             //Calls the function deleteComment based on the Index (i) when swiped right or left.
             onDismissed: (direction) {
               setState((){
-                commentsProvider.deleteComment(i);
+                fsService.deleteComment(widget.movieTitle);
+                // commentsProvider.deleteComment(i);
               });
             },
             child: ListTile(

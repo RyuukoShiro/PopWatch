@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:popwatch/lists/comments_list.dart';
 import 'package:popwatch/lists/favourites_list.dart';
 import 'package:popwatch/lists/movie_show_list.dart';
+import 'package:popwatch/lists/user_list.dart';
 import 'package:popwatch/screens/favourites_screen.dart';
 import 'package:popwatch/screens/home.dart';
 import 'package:popwatch/screens/list_screen.dart';
@@ -31,8 +32,9 @@ class MyApp extends StatelessWidget {
       builder: (context, snapshot) {
         return MultiProvider(providers: [
         ChangeNotifierProvider<MovieShowProvider>(create: (context) => MovieShowProvider()),
-          ChangeNotifierProvider<FavouritesListProvider>(create: (context) => FavouritesListProvider()),
-          ChangeNotifierProvider<CommentsList>(create: (context) => CommentsList()),
+          ChangeNotifierProvider.value(value: CurrentUserProvider()),
+          ChangeNotifierProvider.value(value: FavouritesListProvider()),
+          ChangeNotifierProvider.value(value: CommentsListProvider()),
         ],
           //The MultiProvider ensures that each provider is working on the page which it contains
           //ThemeNotifier allows the users to switch between light mode and dark mode
@@ -84,6 +86,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 60,

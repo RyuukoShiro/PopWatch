@@ -1,16 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:popwatch/models/comments.dart';
 
-class CommentsList with ChangeNotifier{
+class CommentsListProvider with ChangeNotifier{
 
   List<Comments> commentsList = [];
 
 
   // Function to add the comments, movieTitle gets the current movie that you are currently viewing
   // and profileicon, username and description to add the data into the list.
-  void addComments(movieTitle, profileicon, username, description) {
+  void addComments(id, movieTitle, profileicon, username, description) {
     commentsList.insert(0,
         Comments(
+          id: id,
           movieTitle: movieTitle,
           profileicon: profileicon,
           username: username,
@@ -31,6 +33,26 @@ class CommentsList with ChangeNotifier{
 
   List<Comments>  getComments(){ // To get the list and return it
     return commentsList;
+  }
+
+  CommentsListProvider(){
+    FirebaseFirestore.instance.collection('comments').snapshots().listen((event){
+      for (var change in event.docChanges){
+        Comments comments = Comments.fromMap(change.doc.data()!, change.doc.id);
+        switch (change.type){
+          case DocumentChangeType.added:
+            commentsList.add(comments);
+            break;
+          case DocumentChangeType.modified:
+            commentsList.removeWhere((element) => element.id == comments.id);
+            commentsList.add(comments);
+            break;
+          case DocumentChangeType.removed:
+            commentsList.removeWhere((element) => element.id == comments.id);
+            break;
+        }
+      }
+    });
   }
 
 }

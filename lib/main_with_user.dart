@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(providers: [
       ChangeNotifierProvider<MovieShowProvider>(create: (context) => MovieShowProvider()),
       ChangeNotifierProvider<FavouritesListProvider>(create: (context) => FavouritesListProvider()),
-      ChangeNotifierProvider<CommentsList>(create: (context) => CommentsList()),
+      ChangeNotifierProvider<CommentsListProvider>(create: (context) => CommentsListProvider()),
     ],
       child: ValueListenableBuilder<ThemeMode>(
         valueListenable: themeNotifier,

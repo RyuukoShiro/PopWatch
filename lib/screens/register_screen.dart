@@ -22,6 +22,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController username = TextEditingController();
   final TextEditingController firstname = TextEditingController();
   final TextEditingController lastname = TextEditingController();
+  final TextEditingController profilepicture = TextEditingController();
 
   // check if there is any values in the validation
   void validate(){
@@ -41,6 +42,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     username.dispose();
     firstname.dispose();
     lastname.dispose();
+    profilepicture.dispose();
     super.dispose();
   }
 
@@ -57,18 +59,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
           email.text.trim(),
           username.text.trim(),
           firstname.text.trim(),
-          lastname.text.trim()
+          lastname.text.trim(),
+          profilepicture.text.trim(),
       );
     }
   }
 
   Future addUserDetailsToFireStore(
-      String email, String username, String firstname, String lastname) async{
+      String email, String username, String firstname, String lastname, String profilepicture) async{
     await FirebaseFirestore.instance.collection('users').add({
       'email': email,
       'username': username,
       'firstname': firstname,
       'lastname': lastname,
+      'profilepicture': profilepicture,
     });
   }
 
@@ -100,6 +104,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     width: 175.0,
                   ),
                   SizedBox(height: 5),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: Container(
+                      child: TextFormField(
+                        validator: MultiValidator([
+                          RequiredValidator(errorText: "* Required"),
+                        ]),
+                        controller: profilepicture,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                          filled: true,
+                          fillColor: Colors.grey[200],
+                          hintText: 'Profile Picture (URL)',
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 15),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
                     child: Container(
