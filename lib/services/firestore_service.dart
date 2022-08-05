@@ -23,6 +23,20 @@ class FirestoreService {
             .toList());
   }
 
+  addMovieShow(title, description, runtime, company, genre , trailer, poster, cover, type){
+    FirebaseFirestore.instance.collection('media').add({
+      'title': title,
+      'description': description,
+      'runtime': runtime,
+      'company': company,
+      'genre': genre,
+      'trailer': trailer,
+      'poster': poster,
+      'cover': cover,
+      'type': type,
+    });
+  }
+
   addFavourite(title, description, runtime, company, genre, trailer, poster,
       cover, type) {
     FirebaseFirestore.instance.collection('favourites').add({
@@ -59,14 +73,30 @@ class FirestoreService {
             .toList());
   }
 
-  addComment(movieTitle, profileicon, username, description) {
-    FirebaseFirestore.instance.collection('comments').add({
-      'movieTitle': movieTitle,
-      'profileicon': profileicon,
-      'username': username,
-      'description': description,
+  editProfile(Users users) {
+    FirebaseFirestore.instance.collection('users').doc(users.id).update({
+      'profilepicture': users.profilepicture,
+      'email': users.email,
+      'username': users.username,
+      'firstname': users.firstname,
+      'lastname': users.lastname,
     });
   }
+
+
+  addComment(movieTitle, profileicon, username, description) {
+    String ids=
+    FirebaseFirestore.instance.collection('comments').doc().id.toString();
+    return
+      FirebaseFirestore.instance.collection('comments').doc(ids).set({
+        'id': ids,
+        'movieTitle': movieTitle,
+        'profileicon': profileicon,
+        'username': username,
+        'description': description,
+      });
+  }
+
   deleteComment(id) {
     FirebaseFirestore.instance.collection('comments').doc(id).delete();
   }

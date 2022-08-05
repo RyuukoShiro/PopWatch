@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:popwatch/lists/comments_list.dart';
 import 'package:popwatch/models/comments.dart';
+import 'package:popwatch/services/firestore_service.dart';
 import 'package:provider/provider.dart';
 
 class EditComment extends StatefulWidget {
@@ -21,6 +22,9 @@ class _EditCommentState extends State<EditComment> {
   String? username;
   String? description;
 
+
+  FirestoreService fsService = FirestoreService();
+
   void editComments(CommentsListProvider commentsList) {
     bool isValid = formkey.currentState!.validate();
     if (isValid) {
@@ -29,7 +33,13 @@ class _EditCommentState extends State<EditComment> {
       }
       if (kDebugMode) {
       }
-      commentsList.editComment(Comments(id: widget.comments.id, movieTitle : widget.movieTitle, profileicon : widget.comments.profileicon, username : widget.comments.username, description: description!));
+      fsService.editComment(Comments(
+          id: widget.comments.id,
+          movieTitle : widget.movieTitle,
+          profileicon : widget.comments.profileicon,
+          username : widget.comments.username,
+          description: description!));
+
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Comment is edited!'),
       ));
@@ -38,6 +48,8 @@ class _EditCommentState extends State<EditComment> {
     }
     FocusScope.of(context).unfocus();
   }
+
+
 
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
 

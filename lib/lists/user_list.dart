@@ -6,6 +6,19 @@ class CurrentUserProvider with ChangeNotifier{
 
   List<Users> currentUsers = [];
 
+
+
+  void editProfiles(Users users){ // Edit function which calls the current index by username and editing it.
+    currentUsers[currentUsers.indexWhere((element) => element.username == users.username)] = users;
+    notifyListeners();
+  }
+
+
+  List<Users> getUsers(){
+    return currentUsers;
+  }
+
+
   CurrentUserProvider(){
     FirebaseFirestore.instance.collection('users').snapshots().listen((event){
       for (var change in event.docChanges){

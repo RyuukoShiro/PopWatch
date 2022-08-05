@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:popwatch/main_with_user.dart';
 import 'package:popwatch/screens/forgetpassword_screen.dart';
 import 'package:popwatch/screens/home_with_user.dart';
 import 'package:popwatch/screens/profile_screen.dart';
