@@ -67,7 +67,7 @@ class _AddMovieShowState extends State<AddMovieShow> {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Add Movie', textAlign: TextAlign.center,),
+          title: const Text('Add Movie/Show', textAlign: TextAlign.center,),
           automaticallyImplyLeading: true,
           leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: () => Navigator.pop(context)
           ),
