@@ -5,25 +5,25 @@ import 'package:popwatch/models/users.dart';
 
 class FirestoreService {
 
-  Stream<List<MoviesAndShow>> getMovieShowList() {
+  Stream<List<MoviesAndShow>> getMovieShowList() { // calls the function getMovieShowList from the firestore_service.dart
     return FirebaseFirestore.instance
         .collection('media')
         .snapshots()
         .map((snapshot) =>
-        snapshot.docs.map((doc) => MoviesAndShow.fromMap(doc.data(), doc.id))
+        snapshot.docs.map((doc) => MoviesAndShow.fromMap(doc.data(), doc.id)) // calls the function fromMap from the movie_show.dart
             .toList());
   }
 
-  Stream<List<MoviesAndShow>> getFavourites() {
+  Stream<List<MoviesAndShow>> getFavourites() { // calls the function getFavourites from the firestore_service.dart
     return FirebaseFirestore.instance
         .collection('favourites')
         .snapshots()
         .map((snapshot) =>
-        snapshot.docs.map((doc) => MoviesAndShow.fromMap(doc.data(), doc.id))
+        snapshot.docs.map((doc) => MoviesAndShow.fromMap(doc.data(), doc.id)) // calls the function fromMap from the movie_show.dart
             .toList());
   }
 
-  addMovieShow(title, description, runtime, company, genre , trailer, poster, cover, type){
+  addMovieShow(title, description, runtime, company, genre , trailer, poster, cover, type){ // calls the function addMovieShow from the firestore_service.dart
     FirebaseFirestore.instance.collection('media').add({
       'title': title,
       'description': description,
@@ -37,7 +37,7 @@ class FirestoreService {
     });
   }
 
-  addFavourite(title, description, runtime, company, genre, trailer, poster,
+  addFavourite(title, description, runtime, company, genre, trailer, poster, // calls the function and adds the current movie/show to the favourites list
       cover, type) {
     FirebaseFirestore.instance.collection('favourites').add({
       'title': title,
@@ -52,11 +52,11 @@ class FirestoreService {
     });
   }
 
-  deleteFavourite(id) {
+  deleteFavourite(id) { // calls the function deleteFavourite from the firestore_service.dart
     FirebaseFirestore.instance.collection('favourites').doc(id).delete();
   }
 
-  Stream<List<Users>> getCurrentUser() {
+  Stream<List<Users>> getCurrentUser() { // Gets the current users from the collection users in the firestore database
     return FirebaseFirestore.instance
         .collection('users')
         .snapshots()
@@ -64,7 +64,7 @@ class FirestoreService {
         snapshot.docs.map((doc) => Users.fromMap(doc.data(), doc.id)).toList());
   }
 
-  Stream<List<Comments>> getComments() {
+  Stream<List<Comments>> getComments() { // Gets the comments from the collection comments in the firestore database
     return FirebaseFirestore.instance
         .collection('comments')
         .snapshots()
@@ -73,7 +73,7 @@ class FirestoreService {
             .toList());
   }
 
-  editProfile(Users users) {
+  editProfile(Users users) { // Calls the function which edits the collection users in the firestore database by id
     FirebaseFirestore.instance.collection('users').doc(users.id).update({
       'profilepicture': users.profilepicture,
       'email': users.email,
@@ -84,7 +84,7 @@ class FirestoreService {
   }
 
 
-  addComment(movieTitle, profileicon, username, description) {
+  addComment(movieTitle, profileicon, username, description) { // Calls the function which adds a comment to the collection comments in the firestore database
     String ids=
     FirebaseFirestore.instance.collection('comments').doc().id.toString();
     return
@@ -97,11 +97,11 @@ class FirestoreService {
       });
   }
 
-  deleteComment(id) {
+  deleteComment(id) { // Calls the function which deletes a comment from the collection comments in the firestore database
     FirebaseFirestore.instance.collection('comments').doc(id).delete();
   }
 
-  editComment(Comments comments) {
+  editComment(Comments comments) { // Calls the function which edits a comment from the collection comments in the firestore database
       FirebaseFirestore.instance.collection('comments').doc(comments.id).update({
         'movieTitle': comments.movieTitle,
         'profileicon': comments.profileicon,

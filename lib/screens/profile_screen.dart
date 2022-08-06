@@ -15,16 +15,16 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final user = FirebaseAuth.instance.currentUser!;
+  final user = FirebaseAuth.instance.currentUser!; // calls the current user.
 
 
   @override
   Widget build(BuildContext context) {
-    CurrentUserProvider currentUserProvider = Provider.of<CurrentUserProvider>(context);
-    List<Users> currentUser = [];
+    CurrentUserProvider currentUserProvider = Provider.of<CurrentUserProvider>(context); // calls the current user provider.
+    List<Users> currentUser = []; // calls the current user.
 
-    return Consumer<CurrentUserProvider>(
-      builder: (BuildContext context, provider, Widget? child) {
+    return Consumer<CurrentUserProvider>( // calls the current user provider.
+      builder: (BuildContext context, provider, Widget? child) { // calls the current user provider.
         currentUser = provider.currentUsers.where((element) => element.email == user.email).toList();
         currentUser[0].profilepicture;
 
@@ -45,11 +45,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CircleAvatar(
-                        radius: 65,
-                        backgroundImage: NetworkImage(currentUser[0].profilepicture),
+                        radius: 68,
+                        backgroundColor: Colors.white,
+                        child: CircleAvatar(
+                          radius: 65,
+                          backgroundImage: NetworkImage(currentUser[0].profilepicture), // calls the current user profile picture.
+                        ),
                       ),
                       SizedBox(height: 10,),
-                      Text(currentUser[0].username, style: TextStyle(
+                      Text(currentUser[0].username, style: TextStyle( // calls the current user username.
                         fontSize: 20,
                         color: Color(0xFFFFFFFF),
                         fontWeight: FontWeight.bold,
@@ -78,60 +82,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                           onTap: (){
                             Navigator.of(context).push(
-                                MaterialPageRoute(builder: (context) => EditProfileScreen(users: currentUser[0],))
+                                MaterialPageRoute(builder: (context) => EditProfileScreen(users: currentUser[0],)) // calls the edit profile screen.
                             );
                           },
                           // Navigator.of(context).push(
                           //     MaterialPageRoute(builder: (context) => EditComment(comments: commentsProvider.getComments()[i], movieTitle: widget.movieTitle,))
                           // );
-                      ),
-                      SizedBox(height: 15,),
-                      InkWell(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Container(
-                              padding: EdgeInsets.all(20),
-                              decoration: BoxDecoration(
-                                color: Color(0xFFFFAB91),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Center(
-                                  child:
-                                  Text("View Favourites",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),)
-                              ),
-                            ),
-                          ),
-                          onTap: (){
-                          }
-                      ),
-                      SizedBox(height: 15,),
-                      InkWell(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Container(
-                              padding: EdgeInsets.all(20),
-                              decoration: BoxDecoration(
-                                color: Color(0xFFFFAB91),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Center(
-                                  child:
-                                  Text("Delete Account",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),)
-                              ),
-                            ),
-                          ),
-                          onTap: (){
-                          }
                       ),
                       SizedBox(height: 15,),
                       InkWell(
@@ -181,7 +137,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ),
                           ), onTap: () {
-                            FirebaseAuth.instance.signOut();
+                            FirebaseAuth.instance.signOut(); // calls the logout function.
                             Navigator.pop(context);
                       },
                           // onTap: (){

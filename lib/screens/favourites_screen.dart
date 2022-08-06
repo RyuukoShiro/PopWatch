@@ -12,11 +12,11 @@ class FavouritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FirestoreService fsService = FirestoreService();
-    FavouritesListProvider favouritesList = Provider.of<FavouritesListProvider>(context);
+    FirestoreService fsService = FirestoreService(); // calls the firestore service.
+    FavouritesListProvider favouritesList = Provider.of<FavouritesListProvider>(context); // calls the favourites list provider.
 
-    return StreamBuilder(
-      stream: fsService.getFavourites(),
+    return StreamBuilder( // calls the stream builder to get the data from the firestore.
+      stream: fsService.getFavourites(), // calls the firestore service to get the favourites.
       builder: (context, snapshot) {
         return Consumer<FavouritesListProvider>(
           builder: (BuildContext context, provider, Widget? child) {
@@ -24,7 +24,7 @@ class FavouritesScreen extends StatelessWidget {
               body: SingleChildScrollView( //fyi most of the screens uses SingleChildScrolLView so there won't be any yellow bar errors
                 child: SafeArea(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center, // centers the column.
                     children: [
                       SizedBox(height: 20),
                       Row(
@@ -47,7 +47,7 @@ class FavouritesScreen extends StatelessWidget {
                       Container(child: (
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: [Container(height:1000, width: 380, child: FavouritesGridView(favouritesList.getFavouritesList())),],
+                        children: [Container(height:1000, width: 380, child: FavouritesGridView(favouritesList.getFavouritesList())),], // calls the favourites grid view.
                         //child: FavouritesGridView is to get the Gridview from the widget folder favouritesGridview
                       )
                       ),

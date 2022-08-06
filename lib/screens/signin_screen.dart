@@ -2,13 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:popwatch/screens/forgetpassword_screen.dart';
-import 'package:popwatch/screens/home_with_user.dart';
-import 'package:popwatch/screens/profile_screen.dart';
-import 'package:popwatch/screens/register_screen.dart';
+
 
 class SignInScreen extends StatefulWidget {
 
-  final VoidCallback showRegisterScreen;
+  final VoidCallback showRegisterScreen; // calls the showRegisterScreen function.
   const SignInScreen({Key? key, required this.showRegisterScreen}) : super(key: key);
 
   @override
@@ -17,9 +15,10 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
 
+
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
-  void validate(){
+  void validate(){ // check if there is any values in the validation
     if(formkey.currentState!.validate()){
       print("validated");
     }else{
@@ -27,10 +26,10 @@ class _SignInScreenState extends State<SignInScreen> {
     }
   }
 
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final _emailController = TextEditingController(); // calls the text editing controller.
+  final _passwordController = TextEditingController(); // calls the text editing controller.
 
-  Future signIn() async{
+  Future signIn() async{ // calls the function signIn from the firebase_auth.dart
     await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim()
@@ -38,13 +37,17 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   @override
-  void dispose() {
+  void dispose() { // dispose the text editing controller.
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
+
+  bool _isObscure = true;
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login', textAlign: TextAlign.center,),
@@ -110,12 +113,22 @@ class _SignInScreenState extends State<SignInScreen> {
                                   "Password should not be greater than 15 characters")
                             ]),
                             controller: _passwordController,
-                            obscureText: true,
+                            obscureText: _isObscure,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                               filled: true,
                               fillColor: Colors.grey[200],
                               hintText: 'Password',
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _isObscure ? Icons.visibility: Icons.visibility_off,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _isObscure = !_isObscure;
+                                  });
+                                },
+                              ),
                             ),
                           ),
                         ),
@@ -200,7 +213,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               ),
                             ),
                             onTap:() {
-                              widget.showRegisterScreen();
+                              widget.showRegisterScreen(); // showRegisterScreen is a function that is being called in the LoginScreen.dart file
                             }
                               // Navigator.push(
                               //     context,

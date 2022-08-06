@@ -41,6 +41,7 @@ class _AddMovieShowState extends State<AddMovieShow> {
           genre, trailer, poster, cover, type);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Movies/Show is added!'),
+        // Calls the function addComments from the movieshowList, and output snackbar when succesfully added.
       ));
       Navigator.pop(context);
       formkey.currentState!.reset();
@@ -96,7 +97,7 @@ class _AddMovieShowState extends State<AddMovieShow> {
                                   ]
                                   ),
                                   onSaved:(value){
-                                    title = value as String;
+                                    title = value as String; // Sets the value of title to the value of the textfield
                                   },
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -120,7 +121,7 @@ class _AddMovieShowState extends State<AddMovieShow> {
                                   ]
                                   ),
                                   onSaved:(value){
-                                    description = value as String;
+                                    description = value as String; // Sets the value of description to the value of the textfield
                                   },
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -144,7 +145,7 @@ class _AddMovieShowState extends State<AddMovieShow> {
                                   ]
                                   ),
                                   onSaved:(value){
-                                    runtime = value as String;
+                                    runtime = value as String; // Sets the value of runtime to the value of the textfield
                                   },
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -168,7 +169,7 @@ class _AddMovieShowState extends State<AddMovieShow> {
                                   ]
                                   ),
                                   onSaved:(value){
-                                    company = value as String;
+                                    company = value as String; // Sets the value of company to the value of the textfield
                                   },
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -192,7 +193,7 @@ class _AddMovieShowState extends State<AddMovieShow> {
                                   ]
                                   ),
                                   onSaved:(value){
-                                    genre = value as String;
+                                    genre = value as String; // Sets the value of genre to the value of the textfield
                                   },
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -216,7 +217,7 @@ class _AddMovieShowState extends State<AddMovieShow> {
                                   ]
                                   ),
                                   onSaved:(value){
-                                    trailer = value as String;
+                                    trailer = value as String; // Sets the value of trailer to the value of the textfield
                                   },
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -240,7 +241,7 @@ class _AddMovieShowState extends State<AddMovieShow> {
                                   ]
                                   ),
                                   onSaved:(value){
-                                    poster = value as String;
+                                    poster = value as String; // Sets the value of poster to the value of the textfield
                                   },
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -264,7 +265,7 @@ class _AddMovieShowState extends State<AddMovieShow> {
                                   ]
                                   ),
                                   onSaved:(value){
-                                    cover = value as String;
+                                    cover = value as String; // Sets the value of cover to the value of the textfield
                                   },
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -288,7 +289,7 @@ class _AddMovieShowState extends State<AddMovieShow> {
                                   ]
                                   ),
                                   onSaved:(value){
-                                    type = value as String;
+                                    type = value as String; // Sets the value of type to the value of the textfield
                                   },
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),

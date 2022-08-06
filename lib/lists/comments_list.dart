@@ -20,21 +20,23 @@ class CommentsListProvider with ChangeNotifier{
         ));
     notifyListeners();
   }
-
+ // Function to remove the comments.
   void deleteComment(i){ // Delete function which calls the current index of the selected comment and delete it
     commentsList.removeAt(i);
     notifyListeners();
   }
-
+  // Function to get the commentsList and to edit the current comments by username
   void editComment(Comments comments){ // Edit function which calls the current index by username and editing it.
     commentsList[commentsList.indexWhere((element) => element.username == comments.username)] = comments;
     notifyListeners();
   }
 
+  // Function to get the commentsList
   List<Comments>  getComments(){ // To get the list and return it
     return commentsList;
   }
 
+  //Calls the provider from the comments_list.dart and get the comments from the firestore.
   CommentsListProvider(){
     FirebaseFirestore.instance.collection('comments').snapshots().listen((event){
       for (var change in event.docChanges){

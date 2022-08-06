@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer(Duration(seconds: 3), ()=>Navigator.pushReplacement
+    Timer(Duration(seconds: 3), ()=>Navigator.pushReplacement // Navigate to the main screen after 3 seconds
       (context, MaterialPageRoute(builder: (context)=> AuthCheck())));
   }
   @override

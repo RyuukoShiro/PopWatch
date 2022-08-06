@@ -19,6 +19,7 @@ class Users {
 
 });
 
+ // Function for the firestore to get the users.
   factory Users.fromMap(Map<String, dynamic> snapshot, String id) => Users(
       id: id,
       profilepicture: snapshot['profilepicture'],

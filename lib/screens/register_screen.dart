@@ -5,7 +5,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:popwatch/screens/signin_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
-  final VoidCallback showLoginScreen;
+  final VoidCallback showLoginScreen; // calls the function showLoginScreen from the signin_screen.dart
   const RegisterScreen({Key? key, required this.showLoginScreen}) : super(key: key);
 
   @override
@@ -16,7 +16,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final TextEditingController password = TextEditingController(); // TextEditingController is used to compare between the password and confirm password when printed out
-  final TextEditingController confirmPassword = TextEditingController();
+  final TextEditingController confirmPassword = TextEditingController(); // TextEditingController is used to compare between the password and confirm password when printed out
   final TextEditingController email = TextEditingController();
   final TextEditingController username = TextEditingController();
   final TextEditingController firstname = TextEditingController();
@@ -24,7 +24,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController profilepicture = TextEditingController();
 
   // check if there is any values in the validation
-  void validate(){
+  void validate(){ // check if there is any values in the validation
     if(formkey.currentState!.validate()){
       print("validated");
 
@@ -34,7 +34,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   @override
-  void dispose() {
+  void dispose() { // dispose of the TextEditingController
     password.dispose();
     confirmPassword.dispose();
     email.dispose();
@@ -46,11 +46,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   // Future signup is used to authenticate the user
-  Future signUp() async {
-    if (passwordConfirmed()) {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: email.text.trim(),
-          password: password.text.trim()
+  Future signUp() async { // Future signup is used to authenticate the user
+    if (passwordConfirmed()) { // check if the password and confirm password are the same
+      await FirebaseAuth.instance.createUserWithEmailAndPassword( // create a user with email and password
+          email: email.text.trim(), // email is the email of the user
+          password: password.text.trim() // password is the password of the user
       );
 
       // add user details to firestore
@@ -64,7 +64,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
-  Future addUserDetailsToFireStore(
+  Future addUserDetailsToFireStore( // add user details to firestore
       String email, String username, String firstname, String lastname, String profilepicture) async{
     await FirebaseFirestore.instance.collection('users').add({
       'email': email,
@@ -75,14 +75,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
   }
 
-  bool passwordConfirmed(){
+  bool passwordConfirmed(){ // check if the password and confirm password are the same
     if (password.text.trim() == confirmPassword.text.trim()) {
-      return true;
+      return true; // return true if the password and confirm password are the same
     } else {
-      return false;
+      return false; // return false if the password and confirm password are not the same
     }
   }
 
+  bool _isObscure = true; // check if the password is obscure or not
+  bool _isObscure2 = true; // check if the confirm password is obscure or not
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +114,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ]),
                         controller: profilepicture,
                         decoration: InputDecoration(
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)), // border of the textfield
                           filled: true,
                           fillColor: Colors.grey[200],
                           hintText: 'Profile Picture (URL)',
@@ -128,7 +130,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         validator: MultiValidator([
                           RequiredValidator(errorText: "* Required"),
                         ]),
-                        controller: username,
+                        controller: username, // username is the username of the user
                         decoration: InputDecoration(
                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                           filled: true,
@@ -210,20 +212,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: TextFormField(
                           controller: password,
                           keyboardType: TextInputType.text,
-                          validator: MultiValidator([
+                          validator: MultiValidator([ // Validator is used to check if there is any values within the TextFormField
                             RequiredValidator(errorText: "* Required"),
-                            MinLengthValidator(6,
+                            MinLengthValidator(6, // MinLengthValidator is used to check if the password is atleast 6 characters long
                                 errorText: "Password should be atleast 6 characters"),
-                            MaxLengthValidator(15,
+                            MaxLengthValidator(15, // MaxLengthValidator is used to check if the password is atmost 15 characters long
                                 errorText:
                                 "Password should not be greater than 15 characters")
                           ]),
-                          obscureText: true,
+                          obscureText: _isObscure,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                             filled: true,
                             fillColor: Colors.grey[200],
                             hintText: 'Password',
+                            suffixIcon: IconButton( // This is used to show the password or not
+                              icon: Icon(
+                                _isObscure
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _isObscure = !_isObscure; // This is used to show the password or not
+                                });
+                              },
+                            ),
                           ),
                         ),
                       ),
@@ -251,12 +265,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               return "Password does not match";
                             }
                           },
-                          obscureText: true,
+                          obscureText: _isObscure2,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                             filled: true,
                             fillColor: Colors.grey[200],
                             hintText: 'Confirm Password',
+                            suffixIcon: IconButton(
+                              icon: Icon( // This is used to show the password or not
+                                _isObscure2
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _isObscure2 = !_isObscure2; // This is used to show the password or not
+                                });
+                              },
+                            ),
                           ),
                         ),
                       ),
@@ -286,7 +312,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       onTap: () {
                         //formkey checks whether if there is any values currently in the TextFormView
                         // if so will be routed to the MainScreenWithUser
-                        if (formkey.currentState!.validate()){
+                        if (formkey.currentState!.validate()){ // If the form is valid then it will be routed to the MainScreenWithUser
                           signUp();
                           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                             content: Text('Registered!'),
@@ -314,7 +340,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                           onTap:(){
-                            widget.showLoginScreen();
+                            widget.showLoginScreen(); // This is used to show the login screen
                           }
                       )
                     ],

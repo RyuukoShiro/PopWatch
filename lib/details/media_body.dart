@@ -102,6 +102,7 @@ class _MovieShowBodyState extends State<MovieShowBody> {
                               setState((){
                                 Text(changeText);
                               });
+                              //Adds the current element to the favouriteslist
                               fsService.addFavourite(
                                 widget.movieshowDisplay.title,
                                 widget.movieshowDisplay.description,
@@ -118,6 +119,7 @@ class _MovieShowBodyState extends State<MovieShowBody> {
                                 content: Text('Added to favourites!'),
                               ));
                             }else{
+                              //Removes the current element from the favouriteslist
                               fsService.deleteFavourite(widget.movieshowDisplay.id);
                               favouritesList.deleteFavourite(widget.movieshowDisplay);
                               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -199,6 +201,7 @@ class _MovieShowBodyState extends State<MovieShowBody> {
                         ),
                         label: Text("Add comment"),
                         onPressed: () {
+                          //onPressed method to check whether if the current state has any existing movie or show
                           Navigator.of(context).push(
                               MaterialPageRoute(builder: (context) => AddComment(commentsList: commentsList.getComments(), movieTitle: widget.movieshowDisplay.title ))
                           );
@@ -208,16 +211,20 @@ class _MovieShowBodyState extends State<MovieShowBody> {
                   ],
                 ),
               ),
+              //Displays the comments of the current element
               StreamBuilder(
+                //StreamBuilder is used to display the comments of the current element
                 stream: fsService.getComments(),
                 builder: (context, snapshot) {
                   return Consumer<CommentsListProvider>(
+                    //Consumer is used to display the comments of the current element
                     builder: (BuildContext context, Provider, child) {
                       return Card(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Container(height:300, child: CommentsListView(movieTitle: widget.movieshowDisplay.title,)),
+                            //CommentsListView is used to display the comments of the current element
                           ],
                         ),
                       );

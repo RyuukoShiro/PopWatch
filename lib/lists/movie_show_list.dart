@@ -191,10 +191,12 @@ class MovieShowProvider with ChangeNotifier {
   }
 
 // searchString is for the search on the list_screen
-  String searchString = "";
+  String searchText = "";
 
+  //
   List<MoviesAndShow> MoviesShowsList = [];
 
+  //Function calls searchMoviesShows to search for any movies on the list_screen.
   MovieShowProvider() {
     FirebaseFirestore.instance.collection('media').snapshots().listen(
       (event) {

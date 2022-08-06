@@ -11,9 +11,9 @@ class ForgetPasswordScreen extends StatefulWidget {
 
 class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
 
-  GlobalKey<FormState> formkey = GlobalKey<FormState>();
+  GlobalKey<FormState> formkey = GlobalKey<FormState>(); // calls the form key.
 
-  void validate(){
+  void validate(){ // check if there is any values in the validation
     if(formkey.currentState!.validate()){
       print("validated");
     }else{
@@ -21,7 +21,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
     }
   }
 
-  Future passwordReset() async {
+  Future passwordReset() async { // calls the function passwordReset from the firebase_auth.dart
     try {
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: _emailController.text.trim());
@@ -30,7 +30,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
           content: Text('Password reset link has been sent! Check your email'),
         );
       });
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException catch (e) { // if there is any error, it will show the error message.
       print (e);
       showDialog(context: context, builder: (context){
         return AlertDialog(
@@ -40,9 +40,9 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
     }
   }
 
-  final _emailController = TextEditingController();
+  final _emailController = TextEditingController(); // calls the text editing controller.
   @override
-  void dispose() {
+  void dispose() { // dispose the text editing controller.
     _emailController.dispose();
     super.dispose();
   }
@@ -88,7 +88,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                             EmailValidator(errorText: "Enter valid email id"),
                           ]
                           ),
-                          controller: _emailController,
+                          controller: _emailController, // calls the text editing controller.
                           decoration: InputDecoration(
                             border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                             filled: true,
@@ -124,8 +124,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                       ),
                       onTap: () {
                         //formkey checks whether if there is any values currently in the TextFormView
-                        // if so will be routed to the MainScreenWithUser
-                        if (formkey.currentState!.validate()){
+                        if (formkey.currentState!.validate()){ //
                           passwordReset();
                         }
                       }

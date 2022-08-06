@@ -24,7 +24,7 @@ class FavouritesListProvider with ChangeNotifier{
 
   List<MoviesAndShow> favouritesList =[];
 
-
+//Calls the provider from the moviesandshow.dart and get the moviesandshow from the firestore.
   FavouritesListProvider(){
     FirebaseFirestore.instance.collection('favourites').snapshots().listen((event){
       for (var change in event.docChanges){

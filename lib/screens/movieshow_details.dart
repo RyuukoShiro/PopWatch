@@ -7,18 +7,19 @@ class MovieShowDetails extends StatelessWidget {
   final String routeName = '/movies';
 
   const MovieShowDetails({Key? key, required this.movieshowDisplay}) : super(key: key);
-  final MoviesAndShow movieshowDisplay;
+  final MoviesAndShow movieshowDisplay; // calls the movieshow display.
+
   @override
 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(movieshowDisplay.title),
+        title: Text(movieshowDisplay.title), // displays the title of the movie show.
         automaticallyImplyLeading: true,
-        leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: () => Navigator.pop(context))
+        leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: () => Navigator.pop(context)) // go back to the previous screen.
       ),
       body: SingleChildScrollView(
-        child: MovieShowBody(movieshowDisplay: movieshowDisplay),
+        child: MovieShowBody(movieshowDisplay: movieshowDisplay), // get the movie show body.
       )
     );
   }

@@ -13,12 +13,12 @@ class CurrentUserProvider with ChangeNotifier{
     notifyListeners();
   }
 
-
+  // Function to get the currentUsers
   List<Users> getUsers(){
     return currentUsers;
   }
 
-
+  //Calls the provider from the current_user.dart and get the current user from the firestore.
   CurrentUserProvider(){
     FirebaseFirestore.instance.collection('users').snapshots().listen((event){
       for (var change in event.docChanges){

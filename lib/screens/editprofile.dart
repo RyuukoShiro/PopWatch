@@ -26,6 +26,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   String? lastname;
   String? email;
 
+
   void editProfiles(CurrentUserProvider currentUsers) {
     bool isValid = formkey.currentState!.validate();
     if (isValid) {
@@ -34,13 +35,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       }
       if (kDebugMode) {
       }
-      fsService.editProfile(Users(
+      fsService.editProfile(Users( // calls the function editProfile from the firestore_service.dart, and output snackbar when succesfully added.
           id: widget.users.id,
           profilepicture : profilepicture!,
           username : username!,
           firstname : firstname!,
           lastname : lastname!,
-          email : email!,
+          email : widget.users.email,
           password : widget.users.password));
 
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -54,7 +55,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
-  void validate(){
+  void validate(){ // check if there is any values in the validation
     if(formkey.currentState!.validate()){
       print("validated");
     }else{
@@ -84,11 +85,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset('assets/images/popcorn.png',
-                        height: 150.0,
-                        width: 175.0,
+                      SizedBox(height: 15),
+                      CircleAvatar(
+                        radius: 72,
+                        backgroundColor: Colors.white,
+                        child: CircleAvatar(
+                          radius: 70,
+                          backgroundImage: NetworkImage(widget.users.profilepicture),
+                        ),
                       ),
-                      SizedBox(height: 5),
+                      SizedBox(height: 15),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 25.0),
                         child: Container(
@@ -97,7 +103,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               RequiredValidator(errorText: "* Required"),
                             ]),
                             onSaved:(value){
-                              profilepicture = value as String;
+                              profilepicture = value as String; // set the value to the profilepicture
                             },
                             initialValue: widget.users.profilepicture,
                             decoration: InputDecoration(
@@ -118,7 +124,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               RequiredValidator(errorText: "* Required"),
                             ]),
                             onSaved:(value){
-                              username = value as String;
+                              username = value as String; // set the value to the username
                             },
                             initialValue: widget.users.username,
                             decoration: InputDecoration(
@@ -140,7 +146,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               RequiredValidator(errorText: "* Required"),
                             ]),
                             onSaved:(value){
-                              firstname = value as String;
+                              firstname = value as String; // set the value to the firstname
                             },
                             initialValue: widget.users.firstname,
                             decoration: InputDecoration(
@@ -162,7 +168,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               RequiredValidator(errorText: "* Required"),
                             ]),
                             onSaved:(value){
-                              lastname = value as String;
+                              lastname = value as String; // set the value to the lastname
                             },
                             initialValue: widget.users.lastname,
                             decoration: InputDecoration(
@@ -189,8 +195,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               ]
                               ),
                               onSaved:(value){
-                                email = value as String;
+                                email = value as String; // set the value to the email
                               },
+                              enabled: false,
                               initialValue: widget.users.email,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -202,34 +209,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           ),
                         ),
                       ),
-                      // SizedBox(height: 15),
-                      // Padding(
-                      //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                      //   child: Container(
-                      //     child: Padding(
-                      //       padding: const EdgeInsets.only(left: 0.0),
-                      //       child: TextFormField(
-                      //         initialValue: widget.users.password,
-                      //         keyboardType: TextInputType.text,
-                      //         validator: MultiValidator([
-                      //           RequiredValidator(errorText: "* Required"),
-                      //           MinLengthValidator(6,
-                      //               errorText: "Password should be atleast 6 characters"),
-                      //           MaxLengthValidator(15,
-                      //               errorText:
-                      //               "Password should not be greater than 15 characters")
-                      //         ]),
-                      //         obscureText: true,
-                      //         decoration: InputDecoration(
-                      //           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                      //           filled: true,
-                      //           fillColor: Colors.grey[200],
-                      //           hintText: 'Password',
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
                       SizedBox(height: 15),
                       InkWell(
                           child: Padding(

@@ -15,7 +15,7 @@ class MoviesAndShow {
   this.runtime, required this.company, required this.genre,
   required this.trailer, required this.poster, required this.cover, required this.type});
 
-
+ // Function for the firestore to get the moviesandshow.
   factory MoviesAndShow.fromMap(Map <String, dynamic> snapshot, String id) => MoviesAndShow(
       id: id,
       title: snapshot['title'] ?? '',

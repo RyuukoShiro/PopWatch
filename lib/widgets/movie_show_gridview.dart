@@ -8,26 +8,23 @@ import 'package:provider/provider.dart';
 
 class MovieShowGridView extends StatelessWidget {
 
-  MovieShowGridView(this.movieshowList, {Key? key, required this.searchController}) : super(key: key);
-  List<MoviesAndShow> movieshowList;
-  final TextEditingController searchController;
+  MovieShowGridView(this.movieshowList, {Key? key, required this.searchList}) : super(key: key);
+  List<MoviesAndShow> movieshowList; // Calls the list movieshowlist
+  final TextEditingController searchList; // calls the searchList function.
 
   @override
   Widget build(BuildContext context) {
 
-    String searchString = Provider.of<MovieShowProvider>(context).searchString;
-    //Calls the searchString inside the MovieShowList class so that the gridview can allow search for the users.
-    // List<MoviesAndShow> movieshowList = Provider.of<MovieShowList>(context).getMoviesShows().where((element) =>
-    //     element.title.toLowerCase().contains(searchString)).toList();
-    //Call the list on which title the user is currently searching on the search
+    String searchText = Provider.of<MovieShowProvider>(context).searchText;
+    //Calls the searchText inside the MovieShowList class so that the gridview can allow search for the users.
 
-    return Consumer(
+    return Consumer( // Calls the MovieShowProvider class.
       builder: (context, MovieShowProvider provider, Widget? child) {
-        if (searchController.text.isEmpty){
-          movieshowList = provider.MoviesShowsList;
+        if (searchList.text.isEmpty){ // if the searchList is empty, then go to the MovieShowList class.
+          movieshowList = provider.MoviesShowsList; // calls the MoviesShowsList function.
         } else {
-          movieshowList = provider.MoviesShowsList.where((element) =>
-              element.title.toLowerCase().contains(searchController.text.toLowerCase())).toList();
+          movieshowList = provider.MoviesShowsList.where((element) => // if the searchList is not empty, then go to the MovieShowList class.
+              element.title.toLowerCase().contains(searchList.text.toLowerCase())).toList(); // calls the MoviesShowsList function.
         }
 
         return Container(
@@ -57,7 +54,7 @@ class MovieShowGridView extends StatelessWidget {
                                 color: Color(0xFFFFAB91),
                               ),
                               child: Center(
-                                  child: Text(movieshowList[i].title, style: TextStyle(
+                                  child: Text(movieshowList[i].title, style: TextStyle( //Shows the title for each movie and show based on their index
                                     fontSize: 11,
                                     fontWeight: FontWeight.bold,
                                   ))

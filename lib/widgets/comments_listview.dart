@@ -24,14 +24,14 @@ class _CommentsListViewState extends State<CommentsListView> {
     //Calls the provider for CommentsList
     CommentsListProvider commentsProvider = Provider.of<CommentsListProvider>(context);
     // var commentList is used to call the provider where the current movieTitle which the MovieDetails is in.
-    var commentsList = Provider.of<CommentsListProvider>(context).getComments().where((element) => element.movieTitle == widget.movieTitle).toList();
+
+
+
     FirestoreService fsService = FirestoreService();
-    CurrentUserProvider userProvider = Provider.of<CurrentUserProvider>(context);
     final user = FirebaseAuth.instance.currentUser!;
 
     List<Users> currentUser = [];
     List<Comments> currentComment = [];
-
 
     return StreamBuilder(
       stream: fsService.getComments(),
@@ -39,10 +39,11 @@ class _CommentsListViewState extends State<CommentsListView> {
         return Consumer2<CommentsListProvider, CurrentUserProvider>(
           builder: (BuildContext, Provider, CurrentUserProvider provider, child) {
             currentUser = provider.currentUsers.where((element) => element.email == user.email).toList();
+            var currentComment = commentsProvider.getComments().where((element) => element.movieTitle == widget.movieTitle).toList();
             return Scaffold(
               body: ListView.builder(
-                itemCount: commentsList.length, itemBuilder: (ctx, i){
-                  final commetsList = commentsList[i];
+                itemCount: currentComment.length, itemBuilder: (ctx, i){
+                final commetsList = currentComment[i];
                 return Card(
                   child: Dismissible(
                     background: Container(
@@ -53,14 +54,13 @@ class _CommentsListViewState extends State<CommentsListView> {
                     //Calls the function deleteComment based on the Index (i) when swiped right or left.
                     onDismissed: (direction) {
                       setState((){
-                        fsService.deleteComment(commentsList[i].id);
-                        // if (currentUser[0].username == currentComment[i].username) {
-                        //   fsService.deleteComment(commentsList[i].id);
-                        // } else {
-                        //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        //     content: Text('You are not the owner of this comment!'),
-                        //   ));
-                        // }
+                        if (currentUser[0].username == currentComment[i].username) {
+                          fsService.deleteComment(currentComment[i].id);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text('You are not the owner of this comment!'),
+                          ));
+                        }
                         // commentsProvider.deleteComment(i);
                       });
                     },
@@ -75,9 +75,15 @@ class _CommentsListViewState extends State<CommentsListView> {
                       trailing: IconButton(
                         icon: Icon(Icons.edit, color: Color(0xFFFFCCBC), size:25),
                         onPressed: (){
-                          Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => EditComment(comments: commentsProvider.getComments()[i], movieTitle: widget.movieTitle,))
-                          );
+                          if (currentUser[0].username == currentComment[i].username) {
+                            Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) => EditComment(comments: currentComment[i], movieTitle: widget.movieTitle,))
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text('You are not the owner of this comment!'),
+                            ));
+                          }
                         },
                       ),
                     ),

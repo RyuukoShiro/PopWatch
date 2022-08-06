@@ -19,13 +19,13 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         Provider.of<MovieShowProvider>(context).getMoviesShows();
     //Calls the provider list based on getMoviesShows
 
-    return Consumer<MovieShowProvider>(
+    return Consumer<MovieShowProvider>( // calls the consumer to get the data from the provider.
       builder: (context, provider, child) {
         List<MoviesAndShow> moviesList =
-            provider.MoviesShowsList.where((element) => element.type == "Movie")
+            provider.MoviesShowsList.where((element) => element.type == "Movie") // filters the list to only show movies.
                 .toList();
         List<MoviesAndShow> showsList =
-            provider.MoviesShowsList.where((element) => element.type == "Show")
+            provider.MoviesShowsList.where((element) => element.type == "Show") // filters the list to only show shows.
                 .toList();
         return Scaffold(
           body: SingleChildScrollView(
@@ -63,7 +63,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                             height: 220,
                             // Calls the MediaGridView for it to show on the home.dart, and checks for what type of media it is, whether it is a movie or show
                             // If its a movie, the gridview will show only movies.
-                            child: moviesList.length == 0 ? SizedBox() : MediaGridView(moviesList),
+                            child: moviesList.length == 0 ? SizedBox() : MediaGridView(moviesList), // calls the media grid view.
                           ),
                         ],
                       ),
@@ -100,7 +100,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                             children: [
                               Container(
                                 height: 220,
-                                child: showsList.length == 0 ? CircularProgressIndicator() : MediaGridView(showsList),
+                                child: showsList.length == 0 ? CircularProgressIndicator() : MediaGridView(showsList), // Calls the MediaGridView for it to show on the home.dart, and checks for what type of media it is, whether it is a movie or show
                               ),
                               // Calls the MediaGridView for it to show on the home.dart, and checks for what type of media it is, whether it is a movie or show
                               // If its a show, the gridview will show only shows.

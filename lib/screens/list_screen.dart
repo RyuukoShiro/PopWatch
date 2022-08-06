@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:popwatch/lists/movie_show_list.dart';
-import 'package:popwatch/models/movie_show.dart';
-import 'package:popwatch/widgets/media_gridview.dart';
 import 'package:popwatch/widgets/movie_show_gridview.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +13,7 @@ class ListScreen extends StatefulWidget {
 
 class _ListScreenState extends State<ListScreen> {
 
-  TextEditingController searchController = TextEditingController();
+  TextEditingController searchList = TextEditingController(); // creates a text editing controller.
   @override
   Widget build(BuildContext context) {
 
@@ -31,10 +29,10 @@ class _ListScreenState extends State<ListScreen> {
             SizedBox(height: 10),
             Padding(padding: const EdgeInsets.symmetric(horizontal:15.0),
             child: TextField(
-              controller: searchController,
+              controller: searchList,
               onChanged: (value){
                 setState((){
-                  movieshowList.searchString = value.toLowerCase(); //Calls the searchString in movieshowList
+                  movieshowList.searchText = value.toLowerCase(); //Calls the searchText in movieshowList
                 });
               },
               decoration: InputDecoration(
@@ -69,7 +67,7 @@ class _ListScreenState extends State<ListScreen> {
                     Container(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: [Container(height:580, width: 380, child: MovieShowGridView(movieshowList.getMoviesShows(), searchController: searchController,))],
+                        children: [Container(height:580, width: 380, child: MovieShowGridView(movieshowList.getMoviesShows(), searchList: searchList,))], // calls the movie show grid view.
                         //child: MovieShowGridview calls the gridview from the dart flower to display the gridview
                       )
                     )
