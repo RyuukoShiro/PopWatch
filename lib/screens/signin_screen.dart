@@ -30,10 +30,19 @@ class _SignInScreenState extends State<SignInScreen> {
   final _passwordController = TextEditingController(); // calls the text editing controller.
 
   Future signIn() async{ // calls the function signIn from the firebase_auth.dart
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim()
-    );
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim()
+      );
+    } on FirebaseAuthException catch (e){ // if there is any error, it will show the error message.
+      print (e);
+      showDialog(context: context, builder: (context){
+        return AlertDialog(
+          content: Text(e.message.toString()),
+        );
+      });
+    }
   }
 
   @override
