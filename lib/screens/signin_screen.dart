@@ -40,6 +40,7 @@ class _SignInScreenState extends State<SignInScreen> {
       showDialog(context: context, builder: (context){
         return AlertDialog(
           content: Text(e.message.toString()),
+
         );
       });
     }
