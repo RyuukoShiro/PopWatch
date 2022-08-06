@@ -1,9 +1,6 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:popwatch/main.dart';
 import 'package:popwatch/auth/authchecker.dart';
-import 'package:popwatch/screens/home.dart';
 
 
 class SplashScreen extends StatefulWidget {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:popwatch/lists/favourites_list.dart';
-import 'package:popwatch/models/movie_show.dart';
 import 'package:popwatch/services/firestore_service.dart';
 import 'package:popwatch/widgets/favourites_gridview.dart';
 import 'package:provider/provider.dart';

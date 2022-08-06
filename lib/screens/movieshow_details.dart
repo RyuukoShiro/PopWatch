@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:popwatch/details/media_body.dart';
 import 'package:popwatch/models/movie_show.dart';
-import 'package:popwatch/screens/home.dart';
 
 class MovieShowDetails extends StatelessWidget {
   final String routeName = '/movies';

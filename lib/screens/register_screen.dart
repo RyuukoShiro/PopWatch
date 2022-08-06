@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:popwatch/screens/signin_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   final VoidCallback showLoginScreen; // calls the function showLoginScreen from the signin_screen.dart
